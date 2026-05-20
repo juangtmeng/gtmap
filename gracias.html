@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Listo! — GTM Framework</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      padding: 48px 36px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .email-highlight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      color: #1d4ed8;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+    .steps {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 24px; height: 24px;
+      background: #1e293b;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 0.88rem; color: #374151; line-height: 1.5; }
+    .step-text strong { color: #1e293b; }
+    .footer-note {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎉</div>
+    <h1>¡Listo<span id="nombreSpan"></span>!</h1>
+    <p class="subtitle">Recibimos todo. Estamos procesando tu auditoría y armando tu GTM Framework personalizado.</p>
+
+    <div class="email-highlight" id="emailBox">
+      En 5-10 minutos te llega el PDF por email.
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Auditoría de tu sitio</strong> — analizamos tu presencia digital, funnel y stack tecnológico.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>ICPs y Buyer Personas</strong> — definimos a quién le estás vendiendo y cómo piensa.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>GTM Framework completo</strong> — customer journey, funnel, content strategy y plan de acción 90/180/365 días.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>PDF en tu bandeja</strong> — un documento listo para ejecutar, sin necesidad de consultoría extra.</div>
+      </div>
+    </div>
+
+    <p class="footer-note">¿No llegó en 10 minutos? Revisá spam o respondé el mail que te enviamos.</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nombre = params.get('nombre') || '';
+    const email = params.get('email') || '';
+    if (nombre) document.getElementById('nombreSpan').textContent = ', ' + nombre.split(' ')[0];
+    if (email) document.getElementById('emailBox').textContent = `En 5-10 minutos te llega el PDF a ${email}`;
+  </script>
+</body>
+</html>
