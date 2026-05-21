@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu auditoría — GTM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #1e293b; }
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); color: white; padding: 40px 24px 32px; text-align: center; }
+    .hero h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+    .hero p { color: #cbd5e1; font-size: 0.95rem; max-width: 540px; margin: 0 auto; }
+    .container { max-width: 720px; margin: -20px auto 56px; padding: 0 16px; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07); padding: 28px 26px; }
+
+    /* Estado generando */
+    .gen { text-align: center; padding: 20px 0; }
+    .gen .spinner { width: 34px; height: 34px; border: 3px solid #e2e8f0; border-top-color: #1e293b; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 18px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .gen .msg { font-size: 1rem; font-weight: 600; color: #1e293b; margin-bottom: 6px; min-height: 24px; }
+    .gen .sub { font-size: 0.85rem; color: #64748b; }
+    .steps { text-align: left; max-width: 380px; margin: 22px auto 0; }
+    .step { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 0.85rem; color: #94a3b8; transition: color 0.3s; }
+    .step.on { color: #1e293b; font-weight: 500; }
+    .step .ic { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    .step.on .ic { background: #22c55e; border-color: #22c55e; color: white; }
+    .step.on .ic::after { content: '✓'; }
+
+    /* Reporte */
+    .report { display: none; }
+    .report-head { border-top: 4px solid #1e293b; padding: 16px 0 8px; display: flex; align-items: center; }
+    .report-head .brand { font-weight: 800; font-size: 1.05rem; color: #1e293b; }
+    .report-head .meta { margin-left: auto; text-align: right; font-size: 0.72rem; color: #94a3b8; }
+    .report-body h2 { font-size: 1.15rem; color: #1e293b; margin: 16px 0 8px; }
+    .report-body h3 { font-size: 0.95rem; color: #334155; margin: 14px 0 6px; }
+    .report-body p, .report-body li { font-size: 0.88rem; color: #475569; line-height: 1.6; }
+    .report-body ul { padding-left: 18px; margin: 6px 0; }
+    .report-body b { color: #1e293b; }
+    .tbl { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.8rem; }
+    .tbl th, .tbl td { border: 1px solid #e2e8f0; padding: 6px 9px; text-align: left; }
+    .tbl th { background: #f8fafc; font-weight: 600; }
+
+    .cta-box { margin-top: 24px; padding: 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; text-align: center; }
+    .cta-box h3 { font-size: 1.05rem; color: #1e293b; margin-bottom: 6px; }
+    .cta-box p { font-size: 0.88rem; color: #475569; margin-bottom: 16px; }
+    .btn { display: inline-block; background: #1e293b; color: white; padding: 13px 28px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s; }
+    .btn:hover { background: #334155; transform: translateY(-1px); }
+    .fallback { display: none; text-align: center; padding: 10px 0; }
+    .fallback p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1 id="heroTitle">Analizando tu sitio…</h1>
+  <p id="heroSub">Estamos auditando tu presencia digital. Esto toma menos de un minuto.</p>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <!-- Estado: generando -->
+    <div class="gen" id="genState">
+      <div class="spinner"></div>
+      <div class="msg" id="genMsg">Leyendo tu sitio…</div>
+      <div class="sub">Tu auditoría va a aparecer acá abajo apenas esté lista.</div>
+      <div class="steps">
+        <div class="step on" id="s1"><span class="ic"></span> Analizando tu presencia web</div>
+        <div class="step" id="s2"><span class="ic"></span> Detectando fugas en tu funnel</div>
+        <div class="step" id="s3"><span class="ic"></span> Identificando tu stack y gaps</div>
+        <div class="step" id="s4"><span class="ic"></span> Armando los hallazgos críticos</div>
+      </div>
+    </div>
+
+    <!-- Estado: reporte listo -->
+    <div class="report" id="reportState">
+      <div class="report-head">
+        <span class="brand">Auditoría de Growth Marketing</span>
+        <span class="meta" id="repMeta"></span>
+      </div>
+      <div class="report-body" id="repBody"></div>
+
+      <div class="cta-box">
+        <h3>Esto es solo el punto de partida 🧭</h3>
+        <p>Respondé 10 preguntas rápidas y armamos tu <b>GTM Framework</b> completo + tu <b>Plan de Acción</b>, todo sobre tus datos reales.</p>
+        <button class="btn" id="continuarBtn">Continuar con el cuestionario →</button>
+      </div>
+    </div>
+
+    <!-- Estado: fallback (tardó demasiado) -->
+    <div class="fallback" id="fallbackState">
+      <p>Tu auditoría está tardando un poco más de lo normal. No te preocupes: <b>la vas a recibir por email</b> apenas esté lista.<br><br>Podés seguir con el cuestionario igual.</p>
+      <button class="btn" id="continuarBtn2">Continuar con el cuestionario →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
+
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id') || '';
+  const nombre = params.get('nombre') || '';
+
+  // El cuestionario recibe los mismos params
+  const qsForward = params.toString();
+  document.getElementById('continuarBtn').onclick = () => location.href = 'cuestionario.html?' + qsForward;
+  document.getElementById('continuarBtn2').onclick = () => location.href = 'cuestionario.html?' + qsForward;
+
+  if (nombre) document.getElementById('heroSub').textContent =
+    'Dale ' + nombre.split(' ')[0] + ', estamos auditando tu presencia digital. Esto toma menos de un minuto.';
+
+  // Mensajes y pasos progresivos mientras se genera
+  const mensajes = ['Leyendo tu sitio…', 'Analizando tu propuesta de valor…', 'Revisando tu funnel…', 'Detectando tu stack tecnológico…', 'Armando los hallazgos críticos…'];
+  let mi = 0;
+  const msgTimer = setInterval(() => {
+    mi = Math.min(mi + 1, mensajes.length - 1);
+    document.getElementById('genMsg').textContent = mensajes[mi];
+    if (mi >= 1) document.getElementById('s2').classList.add('on');
+    if (mi >= 2) document.getElementById('s3').classList.add('on');
+    if (mi >= 3) document.getElementById('s4').classList.add('on');
+  }, 6000);
+
+  // JSONP (evita CORS)
+  function jsonp(url, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const cb = 'pvcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+      const script = document.createElement('script');
+      let done = false;
+      const timer = setTimeout(() => { if (!done) { done = true; cleanup(); reject(new Error('timeout')); } }, timeoutMs || 15000);
+      function cleanup() { try { delete window[cb]; } catch (e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); clearTimeout(timer); }
+      window[cb] = (d) => { if (done) return; done = true; cleanup(); resolve(d); };
+      script.onerror = () => { if (done) return; done = true; cleanup(); reject(new Error('script_error')); };
+      script.src = url + (url.indexOf('?') !== -1 ? '&' : '?') + 'callback=' + cb;
+      document.body.appendChild(script);
+    });
+  }
+
+  function mdToHtml(md) {
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const lines = md.split('\n'); let html = '', inList = false;
+    for (let raw of lines) {
+      const line = raw.trim();
+      if (!line) { if (inList){html+='</ul>';inList=false;} continue; }
+      if (/^#{1,2}\s/.test(line)) { if(inList){html+='</ul>';inList=false;} html += '<h2>' + esc(line.replace(/^#{1,2}\s/,'')) + '</h2>'; }
+      else if (/^#{3,}\s/.test(line)) { if(inList){html+='</ul>';inList=false;} html += '<h3>' + esc(line.replace(/^#{3,}\s/,'')) + '</h3>'; }
+      else if (/^[-*]\s/.test(line)) { if(!inList){html+='<ul>';inList=true;} html += '<li>' + esc(line.replace(/^[-*]\s/,'')) + '</li>'; }
+      else { if(inList){html+='</ul>';inList=false;} html += '<p>' + esc(line) + '</p>'; }
+    }
+    if (inList) html += '</ul>';
+    return html.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+
+  function mostrarReporte(texto) {
+    clearInterval(msgTimer);
+    document.getElementById('genState').style.display = 'none';
+    document.getElementById('reportState').style.display = 'block';
+    document.getElementById('heroTitle').textContent = '¡Tu auditoría está lista!';
+    document.getElementById('heroSub').textContent = 'Esto es lo que encontramos analizando tu sitio. El plan completo viene después del cuestionario.';
+    document.getElementById('repMeta').innerHTML = new Date().toLocaleDateString('es-AR');
+    document.getElementById('repBody').innerHTML = mdToHtml(texto);
+  }
+
+  function mostrarFallback() {
+    clearInterval(msgTimer);
+    document.getElementById('genState').style.display = 'none';
+    document.getElementById('fallbackState').style.display = 'block';
+    document.getElementById('heroTitle').textContent = 'Tu auditoría está en camino';
+  }
+
+  // Polling: consulta el estado hasta que la auditoría esté lista (máx ~3 min)
+  let intentos = 0;
+  const MAX = 36; // 36 × 5s = 3 min
+  async function poll() {
+    intentos++;
+    try {
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=resultado&sid=' + encodeURIComponent(sessionId), 12000);
+      if (data && data.auditoria && (data.status === 'audit_ready' || data.status === 'esperando_auditoria' || data.status === 'generando_icps' || data.status === 'generando_framework' || data.status === 'delivered')) {
+        return mostrarReporte(data.auditoria);
+      }
+    } catch (e) { /* reintentar */ }
+    if (intentos >= MAX) return mostrarFallback();
+    setTimeout(poll, 5000);
+  }
+
+  if (!sessionId) { mostrarFallback(); }
+  else { setTimeout(poll, 4000); } // dar tiempo a que arranque la generación
+</script>
+
+</body>
+</html>

@@ -238,10 +238,10 @@
 
       <button type="submit" class="submit-btn" id="submitBtn">
         <div class="spinner" id="spinner"></div>
-        <span id="btnText">Continuar con el cuestionario →</span>
+        <span id="btnText">Ver mi auditoría gratis →</span>
       </button>
 
-      <p class="info-note">Mientras completás el cuestionario, analizamos tu sitio en background.</p>
+      <p class="info-note">En menos de un minuto ves tu auditoría en pantalla. Sin tarjeta, sin costo.</p>
 
     </form>
   </div>
@@ -328,10 +328,10 @@
       // no-cors puede lanzar error en algunos browsers, es normal
     }
 
-    // Redirigir al cuestionario con los datos en la URL
+    // Redirigir a la pantalla de preview (muestra la auditoría) con los datos en la URL
     const params = new URLSearchParams({ session_id: sessionId, vertical, modelo, nombre, email });
     setTimeout(() => {
-      window.location.href = 'cuestionario.html?' + params.toString();
+      window.location.href = 'preview.html?' + params.toString();
     }, 800);
   }
 </script>
