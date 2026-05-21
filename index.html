@@ -328,8 +328,8 @@
       // no-cors puede lanzar error en algunos browsers, es normal
     }
 
-    // Redirigir a la pantalla de preview (muestra la auditoría) con los datos en la URL
-    const params = new URLSearchParams({ session_id: sessionId, vertical, modelo, nombre, email });
+    // Redirigir a la pantalla de preview con los datos en la URL (incluye url y ciudad para el teaser)
+    const params = new URLSearchParams({ session_id: sessionId, url, ciudad, vertical, modelo, nombre, email });
     setTimeout(() => {
       window.location.href = 'preview.html?' + params.toString();
     }, 800);
