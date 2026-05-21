@@ -173,15 +173,20 @@
             <span class="option-dot"></span>
             <span class="option-label">SaaS / Software</span>
           </label>
-          <label class="option-card" onclick="selectOption('vertical', 'Consultoría / Servicios profesionales', this)">
-            <input type="radio" name="vertical" value="Consultoría / Servicios profesionales">
-            <span class="option-dot"></span>
-            <span class="option-label">Consultoría / Servicios profesionales</span>
-          </label>
           <label class="option-card" onclick="selectOption('vertical', 'Ecommerce / Marca de producto', this)">
             <input type="radio" name="vertical" value="Ecommerce / Marca de producto">
             <span class="option-dot"></span>
             <span class="option-label">Ecommerce / Marca de producto</span>
+          </label>
+          <label class="option-card" onclick="selectOption('vertical', 'PYME / Negocio local', this)">
+            <input type="radio" name="vertical" value="PYME / Negocio local">
+            <span class="option-dot"></span>
+            <span class="option-label">PYME / Negocio local (opera en una zona)</span>
+          </label>
+          <label class="option-card" onclick="selectOption('vertical', 'Consultoría / Servicios profesionales', this)">
+            <input type="radio" name="vertical" value="Consultoría / Servicios profesionales">
+            <span class="option-dot"></span>
+            <span class="option-label">Consultoría / Servicios profesionales</span>
           </label>
         </div>
         <input type="hidden" id="vertical" name="vertical" required>
@@ -207,6 +212,11 @@
           </label>
         </div>
         <input type="hidden" id="modelo" name="modelo" required>
+      </div>
+
+      <div class="form-group" id="ciudadGroup" style="display:none">
+        <label for="ciudad">¿En qué ciudad o zona opera tu empresa?</label>
+        <input type="text" id="ciudad" name="ciudad" placeholder="Ej: San Miguel de Tucumán, Argentina" maxlength="120">
       </div>
 
       <div class="divider"></div>
@@ -248,6 +258,18 @@
     const group = document.getElementById(field + 'Group');
     group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
     element.classList.add('selected');
+
+    // La ciudad solo es relevante para PYME / negocio local (opera en una zona).
+    // SaaS (global/remoto), e-commerce (envía a cualquier lado) y consultoría no la necesitan.
+    if (field === 'vertical') {
+      // Consultoría / Servicios profesionales = camino white-label: derivamos al configurador.
+      if (value.includes('Consultoría') || value.includes('Servicios')) {
+        window.location.href = 'whitelabel.html';
+        return;
+      }
+      const esLocal = value.includes('PYME') || value.includes('Negocio local');
+      document.getElementById('ciudadGroup').style.display = esLocal ? 'block' : 'none';
+    }
   }
 
   function generateUUID() {
@@ -273,6 +295,7 @@
     hideError();
 
     const url = document.getElementById('url').value.trim();
+    const ciudad = document.getElementById('ciudad').value.trim();
     const vertical = document.getElementById('vertical').value;
     const modelo = document.getElementById('modelo').value;
     const nombre = document.getElementById('nombre').value.trim();
@@ -282,8 +305,11 @@
     if (!vertical) return showError('Por favor seleccioná el tipo de empresa.');
     if (!modelo) return showError('Por favor seleccioná el modelo comercial.');
 
+    const esLocal = vertical.includes('PYME') || vertical.includes('Negocio local');
+    if (esLocal && !ciudad) return showError('Por favor indicá la ciudad o zona donde opera tu empresa.');
+
     const sessionId = generateUUID();
-    const data = { type: 'entrada', sessionId, url, vertical, modelo, nombre, email, rol };
+    const data = { type: 'entrada', sessionId, url, ciudad, vertical, modelo, nombre, email, rol };
 
     // Mostrar loading
     document.getElementById('submitBtn').disabled = true;
@@ -309,3 +335,6 @@
     }, 800);
   }
 </script>
+
+</body>
+</html>

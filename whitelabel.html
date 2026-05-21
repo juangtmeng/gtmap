@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White-label — Auditorías de marketing con tu marca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --brand: #1e293b; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #1e293b; }
+
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      color: white; padding: 56px 24px 44px; text-align: center;
+    }
+    .hero .pill {
+      display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px; padding: 5px 14px; font-size: 0.78rem; color: #e2e8f0; margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px; max-width: 720px; margin-left: auto; margin-right: auto; }
+    .hero p { font-size: 1.05rem; color: #cbd5e1; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+    .layout { max-width: 1100px; margin: -24px auto 60px; padding: 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+    .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05); padding: 28px 24px; }
+    .preview-col { position: sticky; top: 16px; }
+    @media (max-width: 860px) { .preview-col { position: static; } }
+
+    .block-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin: 22px 0 14px; }
+    .block-title:first-child { margin-top: 0; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.88rem; font-weight: 500; color: #374151; margin-bottom: 6px; }
+    .optional { font-size: 0.74rem; color: #9ca3af; font-weight: 400; }
+    input[type=text], input[type=url], input[type=email], textarea, select {
+      width: 100%; padding: 9px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px;
+      font-size: 0.9rem; font-family: inherit; color: #1e293b; outline: none; transition: border-color 0.15s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(30,41,59,0.08); }
+    textarea { resize: vertical; min-height: 64px; }
+    .row { display: flex; gap: 10px; }
+    .row > * { flex: 1; }
+    .color-row { display: flex; align-items: center; gap: 10px; }
+    .color-row input[type=color] { width: 44px; height: 38px; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 2px; cursor: pointer; }
+    .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 480px) { .checks { grid-template-columns: 1fr; } }
+    .check {
+      display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1.5px solid #e2e8f0;
+      border-radius: 8px; cursor: pointer; font-size: 0.85rem; user-select: none; transition: all 0.15s;
+    }
+    .check:hover { border-color: #cbd5e1; }
+    .check.on { border-color: var(--brand); background: #f8fafc; }
+    .check .box { width: 16px; height: 16px; border: 2px solid #d1d5db; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .check.on .box { background: var(--brand); border-color: var(--brand); }
+    .check.on .box::after { content: '✓'; color: white; font-size: 10px; font-weight: 700; }
+
+    .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-size: 0.92rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.15s; }
+    .btn-primary { background: var(--brand); color: white; }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-ghost { background: white; color: var(--brand); border: 1.5px solid var(--brand); margin-top: 10px; }
+    .btn-ghost:hover { background: #f8fafc; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* PREVIEW (entregable branded) */
+    .preview-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .preview-label .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
+    .report {
+      border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: white;
+    }
+    .report-header { padding: 18px 20px; border-top: 4px solid var(--brand); display: flex; align-items: center; gap: 12px; }
+    .report-logo { height: 34px; max-width: 130px; object-fit: contain; }
+    .report-logo-fallback { font-weight: 800; font-size: 1.05rem; color: var(--brand); }
+    .report-header .meta { margin-left: auto; text-align: right; font-size: 0.7rem; color: #94a3b8; }
+    .report-body { padding: 8px 20px 22px; }
+    .report-body h2 { font-size: 1.15rem; color: var(--brand); margin: 16px 0 8px; }
+    .report-body h3 { font-size: 0.92rem; color: #334155; margin: 14px 0 6px; }
+    .report-body p, .report-body li { font-size: 0.84rem; color: #475569; line-height: 1.6; }
+    .report-body ul { padding-left: 18px; margin: 6px 0; }
+    .badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 5px; margin-right: 6px; }
+    .badge.crit { background: #fef2f2; color: #dc2626; }
+    .badge.alto { background: #fff7ed; color: #ea580c; }
+    .tbl { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.78rem; }
+    .tbl th, .tbl td { border: 1px solid #e2e8f0; padding: 6px 9px; text-align: left; }
+    .tbl th { background: #f8fafc; color: #334155; font-weight: 600; }
+    .report-footer { padding: 12px 20px; border-top: 1px solid #f1f5f9; font-size: 0.72rem; color: #94a3b8; }
+    .report-footer b { color: var(--brand); }
+    .preview-note { font-size: 0.76rem; color: #94a3b8; margin-top: 10px; text-align: center; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .err { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 9px 12px; border-radius: 8px; font-size: 0.82rem; margin-top: 10px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="pill">Para consultoras y agencias</span>
+  <h1>Ofrecé auditorías de marketing y frameworks GTM con tu marca</h1>
+  <p>Configurá tu servicio white-label en minutos. Tu cliente recibe un entregable de consultoría con tu logo, tus colores y tu nombre. El trabajo pesado lo hacemos nosotros.</p>
+</div>
+
+<div class="layout">
+
+  <!-- CONFIGURADOR -->
+  <div class="card">
+    <form id="cfgForm" onsubmit="return false">
+
+      <p class="block-title">1 · Tu marca (lo que ve tu cliente)</p>
+      <div class="form-group">
+        <label for="marca">Nombre de tu consultora / marca</label>
+        <input type="text" id="marca" placeholder="Ej: Norte Consultora" oninput="render()">
+      </div>
+      <div class="form-group">
+        <label for="sitio">Tu sitio web</label>
+        <input type="url" id="sitio" placeholder="https://tuconsultora.com" oninput="render()">
+      </div>
+      <div class="form-group">
+        <label for="logo">Logo <span class="optional">(link a imagen, opcional)</span></label>
+        <input type="url" id="logo" placeholder="https://.../logo.png" oninput="render()">
+      </div>
+      <div class="form-group">
+        <label>Color principal de marca</label>
+        <div class="color-row">
+          <input type="color" id="color" value="#1e293b" oninput="render()">
+          <input type="text" id="colorHex" value="#1e293b" oninput="syncColor(this.value)" style="max-width:120px">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email/firma con la que entregás <span class="optional">(opcional)</span></label>
+        <input type="email" id="email" placeholder="hola@tuconsultora.com" oninput="render()">
+      </div>
+
+      <p class="block-title">2 · Tu servicio y tu ángulo</p>
+      <div class="form-group">
+        <label for="oferta">¿Qué ofrecés a tus clientes?</label>
+        <select id="oferta" onchange="render()">
+          <option value="">Elegí una opción…</option>
+          <option>Consultoría de marketing</option>
+          <option>Consultoría de growth</option>
+          <option>Branding / posicionamiento</option>
+          <option>Agencia full-service</option>
+          <option>Consultoría de ventas / comercial</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>¿Qué tipo de clientes atendés? <span class="optional">(elegí los que apliquen)</span></label>
+        <div class="checks" id="clientesChecks">
+          <div class="check" data-v="SaaS / Software" onclick="toggleCheck(this)"><span class="box"></span>SaaS / Software</div>
+          <div class="check" data-v="Ecommerce / Marca de producto" onclick="toggleCheck(this)"><span class="box"></span>E-commerce</div>
+          <div class="check" data-v="PYME / Negocio local" onclick="toggleCheck(this)"><span class="box"></span>PYME / Negocio local</div>
+          <div class="check" data-v="Servicios profesionales" onclick="toggleCheck(this)"><span class="box"></span>Servicios profesionales</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="metodo">¿Cuál es tu metodología o ángulo propio? <span class="optional">(para que el entregable suene a vos)</span></label>
+        <textarea id="metodo" placeholder="Ej: Trabajamos con un enfoque de demanda primero, validando ICP contra datos reales antes de invertir en pauta..." oninput="render()"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="tono">Tono del entregable</label>
+        <select id="tono" onchange="render()">
+          <option>Formal y ejecutivo</option>
+          <option>Cercano y directo</option>
+          <option>Técnico y detallado</option>
+        </select>
+      </div>
+
+      <p class="block-title">3 · Cliente de prueba (para el preview real)</p>
+      <div class="form-group">
+        <label for="clienteUrl">URL de un cliente real o de ejemplo</label>
+        <input type="url" id="clienteUrl" placeholder="https://clientedeejemplo.com">
+      </div>
+      <div class="form-group">
+        <label for="clienteVertical">Vertical de ese cliente</label>
+        <select id="clienteVertical">
+          <option value="SaaS / Software">SaaS / Software</option>
+          <option value="Ecommerce / Marca de producto">E-commerce</option>
+          <option value="PYME / Negocio local">PYME / Negocio local</option>
+          <option value="Servicios profesionales">Servicios profesionales</option>
+        </select>
+      </div>
+      <div class="form-group" id="clienteCiudadWrap" style="display:none">
+        <label for="clienteCiudad">Ciudad/zona del cliente (PYME local)</label>
+        <input type="text" id="clienteCiudad" placeholder="Ej: San Miguel de Tucumán">
+      </div>
+
+      <button class="btn btn-primary" id="realBtn" onclick="generarPreviewReal()">
+        <span id="realBtnText">Generar 1 preview real gratis →</span>
+      </button>
+      <button class="btn btn-ghost" onclick="alert('Próximamente: configurá tu servicio completo, probá con más clientes y activá tu URL propia. Por ahora dejanos tu contacto y te avisamos.')">Quiero configurar mi servicio completo</button>
+      <div class="err" id="err"></div>
+
+    </form>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-col">
+    <p class="preview-label"><span class="dot"></span> Vista previa de tu entregable</p>
+    <div class="report" id="report">
+      <div class="report-header">
+        <img id="repLogo" class="report-logo" style="display:none">
+        <span id="repLogoFallback" class="report-logo-fallback">Tu Consultora</span>
+        <div class="meta">Auditoría de Growth Marketing<br>Preparado para: Cliente de ejemplo</div>
+      </div>
+      <div class="report-body" id="repBody">
+        <!-- contenido demo / real -->
+      </div>
+      <div class="report-footer">
+        Documento preparado por <b id="repFooter">Tu Consultora</b> · <span id="repSitio">tuconsultora.com</span>
+      </div>
+    </div>
+    <p class="preview-note" id="previewNote">Demo de ejemplo. Completá tu marca a la izquierda y mirá cómo cambia. Después generá 1 preview real sobre un cliente tuyo.</p>
+  </div>
+
+</div>
+
+<script>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
+
+  const clientes = new Set();
+  let previewRealUsado = false;
+
+  // Contenido DEMO (instantáneo, sin API) — muestra la estructura del entregable con la marca aplicada
+  const DEMO_BODY = `
+    <h2>Resumen ejecutivo</h2>
+    <p>El sitio comunica su propuesta de valor de forma parcial: hay fortalezas claras en la oferta, pero el camino de conversión pierde foco en la página principal. Detectamos 3 palancas de alto impacto para los próximos 90 días.</p>
+    <table class="tbl">
+      <tr><th>Hallazgo</th><th>Urgencia</th></tr>
+      <tr><td>Propuesta de valor difusa en el primer pliegue</td><td><span class="badge crit">CRÍTICO</span></td></tr>
+      <tr><td>CTA principal compite con mensajes secundarios</td><td><span class="badge crit">CRÍTICO</span></td></tr>
+      <tr><td>Falta de prueba social cuantificada</td><td><span class="badge alto">ALTO</span></td></tr>
+    </table>
+    <h2>Análisis de funnel</h2>
+    <p>La etapa de descubrimiento funciona, pero la conversión de visita a contacto cae por falta de un llamado a la acción claro y diferenciado por segmento.</p>
+    <h3>Recomendación inicial</h3>
+    <ul>
+      <li>Reescribir el encabezado con la propuesta de valor en una sola línea.</li>
+      <li>Unificar el CTA principal y repetirlo en puntos clave.</li>
+      <li>Sumar métricas reales como prueba social.</li>
+    </ul>
+    <p style="margin-top:10px;font-style:italic;color:#94a3b8">— Este es un ejemplo. El entregable real se genera sobre el sitio de tu cliente.</p>
+  `;
+
+  function render() {
+    const marca = document.getElementById('marca').value.trim() || 'Tu Consultora';
+    const color = document.getElementById('color').value;
+    const logo = document.getElementById('logo').value.trim();
+    const sitio = document.getElementById('sitio').value.trim().replace(/^https?:\/\//, '') || 'tuconsultora.com';
+
+    document.documentElement.style.setProperty('--brand', color);
+    document.getElementById('colorHex').value = color;
+
+    document.getElementById('repLogoFallback').textContent = marca;
+    document.getElementById('repFooter').textContent = marca;
+    document.getElementById('repSitio').textContent = sitio;
+
+    const logoEl = document.getElementById('repLogo');
+    const fallbackEl = document.getElementById('repLogoFallback');
+    if (logo) { logoEl.src = logo; logoEl.style.display = 'block'; fallbackEl.style.display = 'none'; }
+    else { logoEl.style.display = 'none'; fallbackEl.style.display = 'block'; }
+
+    // Si todavía no hay preview real, mostramos el demo
+    if (!previewRealUsado) {
+      document.getElementById('repBody').innerHTML = DEMO_BODY;
+    }
+  }
+
+  function syncColor(hex) {
+    if (/^#[0-9a-fA-F]{6}$/.test(hex)) { document.getElementById('color').value = hex; render(); }
+  }
+
+  function toggleCheck(el) {
+    const v = el.dataset.v;
+    if (clientes.has(v)) { clientes.delete(v); el.classList.remove('on'); }
+    else { clientes.add(v); el.classList.add('on'); }
+  }
+
+  // Mostrar campo ciudad solo si el cliente de prueba es PYME local
+  document.getElementById('clienteVertical').addEventListener('change', function() {
+    const esLocal = this.value.includes('PYME') || this.value.includes('Negocio local');
+    document.getElementById('clienteCiudadWrap').style.display = esLocal ? 'block' : 'none';
+  });
+
+  function showErr(msg) {
+    const el = document.getElementById('err');
+    el.textContent = msg; el.style.display = 'block';
+  }
+
+  // JSONP: carga la respuesta del Apps Script vía <script> (evita CORS), con timeout.
+  function jsonp(url, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const cb = 'wlcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+      const script = document.createElement('script');
+      let done = false;
+      const timer = setTimeout(() => { if (!done) { done = true; cleanup(); reject(new Error('timeout')); } }, timeoutMs || 90000);
+      function cleanup() { try { delete window[cb]; } catch (e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); clearTimeout(timer); }
+      window[cb] = (data) => { if (done) return; done = true; cleanup(); resolve(data); };
+      script.onerror = () => { if (done) return; done = true; cleanup(); reject(new Error('script_error')); };
+      script.src = url + (url.indexOf('?') !== -1 ? '&' : '?') + 'callback=' + cb;
+      document.body.appendChild(script);
+    });
+  }
+
+  async function generarPreviewReal() {
+    document.getElementById('err').style.display = 'none';
+    if (previewRealUsado) return showErr('Ya usaste tu preview real gratis. Para generar más, configurá tu servicio.');
+
+    const clienteUrl = document.getElementById('clienteUrl').value.trim();
+    const vertical = document.getElementById('clienteVertical').value;
+    const ciudad = document.getElementById('clienteCiudad').value.trim();
+    if (!clienteUrl) return showErr('Poné la URL de un cliente real o de ejemplo para generar el preview.');
+
+    const btn = document.getElementById('realBtn');
+    const txt = document.getElementById('realBtnText');
+    btn.disabled = true;
+    txt.innerHTML = '<span class="spinner"></span> Generando sobre el sitio de tu cliente… (~30s)';
+    document.getElementById('repBody').innerHTML = '<p style="color:#94a3b8">Analizando el sitio de tu cliente y armando la auditoría con tu marca…</p>';
+
+    try {
+      const params = new URLSearchParams({ action: 'preview', url: clienteUrl, vertical, ciudad });
+      const data = await jsonp(APPS_SCRIPT_URL + '?' + params.toString(), 90000);
+      if (data.error) throw new Error(data.error);
+
+      // Render del texto markdown simple → HTML básico
+      previewRealUsado = true;
+      document.getElementById('repBody').innerHTML = mdToHtml(data.auditoria || 'Sin contenido.');
+      document.querySelector('.report-header .meta').innerHTML = 'Auditoría de Growth Marketing<br>Preparado para: ' + clienteUrl.replace(/^https?:\/\//, '');
+      document.getElementById('previewNote').textContent = 'Preview real generado con tu marca. Así recibiría tu cliente el entregable.';
+      txt.textContent = 'Preview real generado ✓';
+    } catch (e) {
+      btn.disabled = false;
+      txt.textContent = 'Generar 1 preview real gratis →';
+      showErr('No pudimos generar el preview ahora. Probá con otra URL o reintentá en un momento.');
+      document.getElementById('repBody').innerHTML = DEMO_BODY;
+    }
+  }
+
+  // Conversor markdown muy básico (headings, listas, negritas, tablas simples)
+  function mdToHtml(md) {
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const lines = md.split('\n');
+    let html = '', inList = false;
+    for (let raw of lines) {
+      const line = raw.trim();
+      if (!line) { if (inList) { html += '</ul>'; inList = false; } continue; }
+      if (/^#{1,2}\s/.test(line)) { if (inList){html+='</ul>';inList=false;} html += '<h2>' + esc(line.replace(/^#{1,2}\s/, '')) + '</h2>'; }
+      else if (/^#{3,}\s/.test(line)) { if (inList){html+='</ul>';inList=false;} html += '<h3>' + esc(line.replace(/^#{3,}\s/, '')) + '</h3>'; }
+      else if (/^[-*]\s/.test(line)) { if (!inList){html+='<ul>';inList=true;} html += '<li>' + esc(line.replace(/^[-*]\s/, '')) + '</li>'; }
+      else { if (inList){html+='</ul>';inList=false;} html += '<p>' + esc(line) + '</p>'; }
+    }
+    if (inList) html += '</ul>';
+    return html.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+
+  render();
+</script>
+
+</body>
+</html>

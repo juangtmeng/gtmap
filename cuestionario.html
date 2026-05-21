@@ -239,6 +239,18 @@
         <p class="section-title">Preguntas específicas — SaaS</p>
 
         <div class="question">
+          <span class="question-label">¿Tu empresa tiene una sola plataforma o varias unidades de negocio?</span>
+          <span class="question-desc">Esto define si armamos un sistema GTM único o uno expandido por cada unidad, combinando estrategias cuando son complementarias.</span>
+          <div class="options-grid" id="saasUdnGroup">
+            <label class="option-card" onclick="selectSingle('saas_udn', 'single', this); toggleUdnLista(false)"><span class="option-dot"></span><span class="option-label">Una sola plataforma / producto</span></label>
+            <label class="option-card" onclick="selectSingle('saas_udn', 'multi', this); toggleUdnLista(true)"><span class="option-dot"></span><span class="option-label">Varias unidades de negocio</span></label>
+          </div>
+          <div id="udnListaWrap" style="display:none;margin-top:10px">
+            <textarea id="saas_udn_lista" placeholder="Nombrá cada unidad de negocio, una por línea (ej: Plataforma de turnos, Consultoría de datos, Staff augmentation...)" style="min-height:70px"></textarea>
+          </div>
+        </div>
+
+        <div class="question">
           <span class="question-label">6. ¿En qué rango de ingresos recurrentes está tu empresa?</span>
           <div class="options-grid" id="saas1Group">
             <label class="option-card" onclick="selectSingle('saas_1', '< $10K MRR', this)"><span class="option-dot"></span><span class="option-label">&#60; $10K MRR ($120K ARR)</span></label>
@@ -405,6 +417,63 @@
         </div>
       </div>
 
+      <!-- PYME / NEGOCIO LOCAL SECTION -->
+      <div class="vertical-section" id="pymeSection">
+        <p class="section-title">Preguntas específicas — Negocio local</p>
+
+        <div class="question">
+          <span class="question-label">6. ¿Cuál es tu ticket promedio de venta o servicio?</span>
+          <div class="options-grid" id="pyme1Group">
+            <label class="option-card" onclick="selectSingle('pyme_1', '< $50 USD', this)"><span class="option-dot"></span><span class="option-label">Bajo (&#60; $50 USD)</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_1', '$50 – $300 USD', this)"><span class="option-dot"></span><span class="option-label">Medio ($50 – $300 USD)</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_1', '$300 – $1.000 USD', this)"><span class="option-dot"></span><span class="option-label">Alto ($300 – $1.000 USD)</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_1', '$1.000+ USD', this)"><span class="option-dot"></span><span class="option-label">Premium ($1.000+ USD)</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="question-label">7. ¿Por dónde llegan hoy la mayoría de tus clientes?</span>
+          <div class="options-grid" id="pyme2Group">
+            <label class="option-card" onclick="selectSingle('pyme_2', 'Google / Maps', this)"><span class="option-dot"></span><span class="option-label">Búsqueda en Google / Maps</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_2', 'Referidos / boca en boca', this)"><span class="option-dot"></span><span class="option-label">Referidos / boca en boca</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_2', 'Redes sociales', this)"><span class="option-dot"></span><span class="option-label">Redes sociales (Instagram, Facebook)</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_2', 'Local físico / cartel / paso', this)"><span class="option-dot"></span><span class="option-label">Local físico / cartel / gente que pasa</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_2', 'Publicidad paga', this)"><span class="option-dot"></span><span class="option-label">Publicidad paga (Google/Meta Ads)</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_2', 'No lo tengo claro', this)"><span class="option-dot"></span><span class="option-label">No lo tengo claro</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="question-label">8. ¿Qué tan fuerte es tu competencia local en la zona?</span>
+          <div class="options-grid" id="pyme3Group">
+            <label class="option-card" onclick="selectSingle('pyme_3', 'Mucha competencia', this)"><span class="option-dot"></span><span class="option-label">Mucha — hay varios competidores fuertes</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_3', 'Media', this)"><span class="option-dot"></span><span class="option-label">Media — algunos competidores</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_3', 'Poca', this)"><span class="option-dot"></span><span class="option-label">Poca — somos casi únicos en la zona</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="question-label">9. ¿Qué % de tus clientes vuelve a comprar o te recomienda?</span>
+          <div class="options-grid" id="pyme4Group">
+            <label class="option-card" onclick="selectSingle('pyme_4', 'Alta recompra/referido', this)"><span class="option-dot"></span><span class="option-label">Alta — la mayoría vuelve o recomienda</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_4', 'Media', this)"><span class="option-dot"></span><span class="option-label">Media — una parte vuelve</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_4', 'Baja', this)"><span class="option-dot"></span><span class="option-label">Baja — casi siempre clientes nuevos</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_4', 'No lo mido', this)"><span class="option-dot"></span><span class="option-label">No lo mido</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="question-label">10. ¿Cuál es hoy tu mayor cuello de botella?</span>
+          <div class="options-grid" id="pyme5Group">
+            <label class="option-card" onclick="selectSingle('pyme_5', 'Pocas consultas / poca demanda', this)"><span class="option-dot"></span><span class="option-label">Pocas consultas / poca demanda</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_5', 'No me encuentran online', this)"><span class="option-dot"></span><span class="option-label">No me encuentran en internet / Google</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_5', 'Cierro pocos presupuestos', this)"><span class="option-dot"></span><span class="option-label">Llegan consultas pero cierro pocas</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_5', 'Reputación / reseñas', this)"><span class="option-dot"></span><span class="option-label">Reputación / pocas reseñas</span></label>
+            <label class="option-card" onclick="selectSingle('pyme_5', 'Capacidad operativa', this)"><span class="option-dot"></span><span class="option-label">Capacidad operativa (no doy abasto)</span></label>
+          </div>
+        </div>
+      </div>
+
       <button type="submit" class="submit-btn" id="submitBtn">
         <div class="spinner" id="spinner"></div>
         <span id="btnText">Generar mi GTM Framework →</span>
@@ -436,9 +505,11 @@
     document.getElementById('saasSection').classList.remove('visible');
     document.getElementById('consSection').classList.remove('visible');
     document.getElementById('ecoSection').classList.remove('visible');
+    document.getElementById('pymeSection').classList.remove('visible');
     if (vertical.includes('SaaS')) document.getElementById('saasSection').classList.add('visible');
     else if (vertical.includes('Consultoría')) document.getElementById('consSection').classList.add('visible');
     else if (vertical.includes('Ecommerce')) document.getElementById('ecoSection').classList.add('visible');
+    else if (vertical.includes('PYME') || vertical.includes('Negocio local')) document.getElementById('pymeSection').classList.add('visible');
   }
   showVerticalSection();
 
@@ -465,6 +536,10 @@
       multiAnswers[field].splice(idx, 1);
       element.classList.remove('selected');
     }
+  }
+
+  function toggleUdnLista(mostrar) {
+    document.getElementById('udnListaWrap').style.display = mostrar ? 'block' : 'none';
   }
 
   function showError(msg) {
@@ -501,6 +576,10 @@
 
     // Agregar respuestas del vertical
     if (vertical.includes('SaaS')) {
+      respuestas.saas_udn = answers.saas_udn || '';
+      if (answers.saas_udn === 'multi') {
+        respuestas.saas_udn_lista = document.getElementById('saas_udn_lista').value.trim();
+      }
       respuestas.saas_1 = answers.saas_1 || '';
       respuestas.saas_2 = answers.saas_2 || '';
       respuestas.saas_3 = answers.saas_3 || '';
@@ -518,6 +597,12 @@
       respuestas.eco_3 = answers.eco_3 || '';
       respuestas.eco_4 = answers.eco_4 || '';
       respuestas.eco_5 = answers.eco_5 || '';
+    } else if (vertical.includes('PYME') || vertical.includes('Negocio local')) {
+      respuestas.pyme_1 = answers.pyme_1 || '';
+      respuestas.pyme_2 = answers.pyme_2 || '';
+      respuestas.pyme_3 = answers.pyme_3 || '';
+      respuestas.pyme_4 = answers.pyme_4 || '';
+      respuestas.pyme_5 = answers.pyme_5 || '';
     }
 
     const data = { type: 'cuestionario', sessionId, vertical, modelo, nombre, email, respuestas };
@@ -540,3 +625,6 @@
     }, 800);
   }
 </script>
+
+</body>
+</html>
