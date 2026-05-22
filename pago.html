@@ -102,7 +102,7 @@
     document.getElementById('spMp').style.display = 'inline-block';
     document.getElementById('txtMp').textContent = 'Generando tu pago seguro…';
     try {
-      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 30000);
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid) + '&_t=' + Date.now(), 30000);
       if (data.error || !data.checkout) throw new Error(data.error || 'sin checkout');
       window.location.href = data.checkout;
     } catch (e) {
