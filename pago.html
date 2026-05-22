@@ -81,6 +81,22 @@
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
   const params = new URLSearchParams(window.location.search);
   const sid = params.get('sid') || params.get('session_id') || '';
+  const nombre = params.get('nombre') || '';
+  const email = params.get('email') || '';
+
+  // Personalizar hero
+  if (nombre) {
+    document.querySelector('.hero h1').textContent = nombre.split(' ')[0] + ', tu informe está listo para generarse 🧭';
+  }
+  if (email) {
+    const p = document.querySelector('.hero p');
+    p.textContent = 'Lo enviamos a ' + email + '. Desbloqueá la Auditoría completa + GTM Framework + Plan de Acción.';
+  }
+
+  // Mostrar error si MP redirigió con fallo
+  if (params.get('error') === '1') {
+    showErr('El pago no se completó. Podés intentarlo nuevamente.');
+  }
 
   function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
 
