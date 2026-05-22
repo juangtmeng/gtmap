@@ -59,10 +59,14 @@
       <li><span class="ic">✓</span> Todo en PDF, a tu email, en minutos</li>
     </ul>
 
-    <button class="btn btn-mp" id="btnMp" onclick="pagarMp()">
-      <span class="spinner" id="spMp"></span>
-      <span id="txtMp">Pagar con Mercado Pago</span>
-    </button>
+    <form method="POST" id="mpForm" style="margin:0" onsubmit="return mpSubmit()">
+      <input type="hidden" name="action" value="crear_pago">
+      <input type="hidden" name="sid" id="sidInput">
+      <button type="submit" class="btn btn-mp" id="btnMp">
+        <span class="spinner" id="spMp"></span>
+        <span id="txtMp">Pagar con Mercado Pago</span>
+      </button>
+    </form>
     <button class="btn btn-ls" id="btnLs" disabled>
       Pagar con tarjeta (USD) <span class="soon">próximamente</span>
     </button>
@@ -94,23 +98,17 @@
     });
   }
 
-  async function pagarMp() {
+  // El form POST navega a Apps Script (doPost), que redirige a Mercado Pago.
+  document.getElementById('mpForm').action = APPS_SCRIPT_URL;
+  document.getElementById('sidInput').value = sid;
+
+  function mpSubmit() {
     document.getElementById('err').style.display = 'none';
-    if (!sid) return showErr('No encontramos tu sesión. Volvé a empezar el formulario.');
-    const btn = document.getElementById('btnMp');
-    btn.disabled = true;
+    if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return false; }
+    document.getElementById('btnMp').disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';
-    document.getElementById('txtMp').textContent = 'Generando tu pago seguro…';
-    try {
-      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid) + '&_t=' + Date.now(), 30000);
-      if (data.error || !data.checkout) throw new Error(data.error || 'sin checkout');
-      window.location.href = data.checkout;
-    } catch (e) {
-      btn.disabled = false;
-      document.getElementById('spMp').style.display = 'none';
-      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
-      showErr('No pudimos abrir el pago ahora. Reintentá en un momento.');
-    }
+    document.getElementById('txtMp').textContent = 'Redirigiendo a Mercado Pago…';
+    return true; // deja que el form navegue
   }
 </script>
 
