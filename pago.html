@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desbloqueá tu informe — GTM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #1e293b; }
+    .hero { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); color: white; padding: 40px 24px 32px; text-align: center; }
+    .hero h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+    .hero p { color: #cbd5e1; font-size: 0.95rem; max-width: 520px; margin: 0 auto; }
+    .container { max-width: 560px; margin: -20px auto 56px; padding: 0 16px; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07); padding: 30px 26px; }
+    .price { text-align: center; margin-bottom: 22px; }
+    .price .amount { font-size: 2.6rem; font-weight: 800; color: #1e293b; }
+    .price .cur { font-size: 1rem; color: #64748b; font-weight: 600; }
+    .price .anchor { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
+    .price .anchor s { color: #cbd5e1; }
+    .incluye { list-style: none; margin: 0 0 24px; }
+    .incluye li { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; font-size: 0.9rem; color: #374151; }
+    .incluye li .ic { color: #22c55e; font-weight: 700; flex-shrink: 0; }
+    .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 0.98rem; font-weight: 700; font-family: inherit; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+    .btn-mp { background: #009ee3; color: white; }
+    .btn-mp:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .btn-ls { background: #1e293b; color: white; }
+    .btn-ls:hover { background: #334155; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .soon { font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 10px; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .guarantee { text-align: center; font-size: 0.82rem; color: #64748b; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; }
+    .guarantee b { color: #1e293b; }
+    .err { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Tu informe completo está listo para generarse 🧭</h1>
+  <p>Ya tenemos todos tus datos. Desbloqueá la Auditoría completa + GTM Framework + Plan de Acción.</p>
+</div>
+
+<div class="container">
+  <div class="card">
+    <div class="err" id="err"></div>
+
+    <div class="price">
+      <div><span class="amount">US$49</span></div>
+      <div class="anchor">Una consultoría GTM equivalente cuesta <s>US$3.000+</s> y semanas de trabajo.</div>
+    </div>
+
+    <ul class="incluye">
+      <li><span class="ic">✓</span> Auditoría completa de tu sitio, funnel y stack</li>
+      <li><span class="ic">✓</span> ICPs / segmentos + Buyer Personas con objeciones</li>
+      <li><span class="ic">✓</span> GTM Framework con KPIs, journey y benchmarks reales</li>
+      <li><span class="ic">✓</span> Plan de Acción 90 días, listo para ejecutar</li>
+      <li><span class="ic">✓</span> Todo en PDF, a tu email, en minutos</li>
+    </ul>
+
+    <button class="btn btn-mp" id="btnMp" onclick="pagarMp()">
+      <span class="spinner" id="spMp"></span>
+      <span id="txtMp">Pagar con Mercado Pago</span>
+    </button>
+    <button class="btn btn-ls" id="btnLs" disabled>
+      Pagar con tarjeta (USD) <span class="soon">próximamente</span>
+    </button>
+
+    <div class="guarantee">
+      <b>Garantía:</b> si el informe no te sirve, te devolvemos el 100%. Sin vueltas.
+    </div>
+  </div>
+</div>
+
+<script>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
+  const params = new URLSearchParams(window.location.search);
+  const sid = params.get('sid') || params.get('session_id') || '';
+
+  function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
+
+  function jsonp(u, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const cb = 'pgcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+      const s = document.createElement('script');
+      let done = false;
+      const timer = setTimeout(() => { if (!done){done=true; cleanup(); reject(new Error('timeout'));} }, timeoutMs || 30000);
+      function cleanup(){ try{delete window[cb];}catch(e){window[cb]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); clearTimeout(timer); }
+      window[cb] = d => { if(done)return; done=true; cleanup(); resolve(d); };
+      s.onerror = () => { if(done)return; done=true; cleanup(); reject(new Error('script_error')); };
+      s.src = u + (u.indexOf('?')!==-1?'&':'?') + 'callback=' + cb;
+      document.body.appendChild(s);
+    });
+  }
+
+  async function pagarMp() {
+    document.getElementById('err').style.display = 'none';
+    if (!sid) return showErr('No encontramos tu sesión. Volvé a empezar el formulario.');
+    const btn = document.getElementById('btnMp');
+    btn.disabled = true;
+    document.getElementById('spMp').style.display = 'inline-block';
+    document.getElementById('txtMp').textContent = 'Redirigiendo a Mercado Pago…';
+    try {
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 30000);
+      if (data.error || !data.checkout) throw new Error(data.error || 'sin checkout');
+      window.location.href = data.checkout;
+    } catch (e) {
+      btn.disabled = false;
+      document.getElementById('spMp').style.display = 'none';
+      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
+      showErr('No pudimos abrir el pago ahora. Reintentá en un momento.');
+    }
+  }
+</script>
+
+</body>
+</html>
