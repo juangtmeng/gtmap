@@ -59,14 +59,10 @@
       <li><span class="ic">✓</span> Todo en PDF, a tu email, en minutos</li>
     </ul>
 
-    <form method="POST" id="mpForm" style="margin:0" onsubmit="return mpSubmit()">
-      <input type="hidden" name="action" value="crear_pago">
-      <input type="hidden" name="sid" id="sidInput">
-      <button type="submit" class="btn btn-mp" id="btnMp">
-        <span class="spinner" id="spMp"></span>
-        <span id="txtMp">Pagar con Mercado Pago</span>
-      </button>
-    </form>
+    <button class="btn btn-mp" id="btnMp" onclick="mpPagar()">
+      <span class="spinner" id="spMp"></span>
+      <span id="txtMp">Pagar con Mercado Pago</span>
+    </button>
     <button class="btn btn-ls" id="btnLs" disabled>
       Pagar con tarjeta (USD) <span class="soon">próximamente</span>
     </button>
@@ -114,17 +110,29 @@
     });
   }
 
-  // El form POST navega a Apps Script (doPost), que redirige a Mercado Pago.
-  document.getElementById('mpForm').action = APPS_SCRIPT_URL;
-  document.getElementById('sidInput').value = sid;
-
-  function mpSubmit() {
+  async function mpPagar() {
     document.getElementById('err').style.display = 'none';
-    if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return false; }
-    document.getElementById('btnMp').disabled = true;
+    if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return; }
+
+    const btn = document.getElementById('btnMp');
+    btn.disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';
-    document.getElementById('txtMp').textContent = 'Redirigiendo a Mercado Pago…';
-    return true; // deja que el form navegue
+    document.getElementById('txtMp').textContent = 'Preparando pago…';
+
+    try {
+      const data = await jsonp(
+        APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid),
+        20000
+      );
+      if (data.error) throw new Error(data.error);
+      document.getElementById('txtMp').textContent = 'Redirigiendo a Mercado Pago…';
+      window.location.href = data.checkout;
+    } catch (err) {
+      btn.disabled = false;
+      document.getElementById('spMp').style.display = 'none';
+      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
+      showErr('No se pudo iniciar el pago: ' + err.message + '. Intentá de nuevo.');
+    }
   }
 </script>
 
