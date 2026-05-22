@@ -94,14 +94,23 @@
     });
   }
 
-  function pagarMp() {
+  async function pagarMp() {
     document.getElementById('err').style.display = 'none';
     if (!sid) return showErr('No encontramos tu sesión. Volvé a empezar el formulario.');
-    document.getElementById('btnMp').disabled = true;
+    const btn = document.getElementById('btnMp');
+    btn.disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';
-    document.getElementById('txtMp').textContent = 'Redirigiendo a Mercado Pago…';
-    // Navegación directa al endpoint que crea la preferencia y redirige (HtmlService)
-    window.location.href = APPS_SCRIPT_URL + '?action=mp_pay&sid=' + encodeURIComponent(sid);
+    document.getElementById('txtMp').textContent = 'Generando tu pago seguro…';
+    try {
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 30000);
+      if (data.error || !data.checkout) throw new Error(data.error || 'sin checkout');
+      window.location.href = data.checkout;
+    } catch (e) {
+      btn.disabled = false;
+      document.getElementById('spMp').style.display = 'none';
+      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
+      showErr('No pudimos abrir el pago ahora. Reintentá en un momento.');
+    }
   }
 </script>
 
