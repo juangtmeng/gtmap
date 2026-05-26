@@ -110,26 +110,15 @@
     });
   }
 
-  async function mpPagar() {
+  function mpPagar() {
     document.getElementById('err').style.display = 'none';
     if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return; }
-    const btn = document.getElementById('btnMp');
-    btn.disabled = true;
+    document.getElementById('btnMp').disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';
-    document.getElementById('txtMp').textContent = 'Preparando pago…';
-    try {
-      const url = APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid);
-      const resp = await fetch(url, { redirect: 'follow' });
-      const data = await resp.json();
-      if (data.error) throw new Error(data.error);
-      window.location.href = data.checkout;
-    } catch (err) {
-      btn.disabled = false;
-      document.getElementById('spMp').style.display = 'none';
-      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
-      // Mostrar el error completo para poder diagnosticar
-      showErr('Error: ' + err.message + ' — Abrí la consola del browser (F12) para más detalle.');
-    }
+    document.getElementById('txtMp').textContent = 'Redirigiendo…';
+    // Navegación directa al doGet. Apps Script crea la preferencia y redirige
+    // a MP usando <a target="_top">, que navega el frame completo desde el iframe.
+    window.location.href = APPS_SCRIPT_URL + '?action=mp_pay&sid=' + encodeURIComponent(sid);
   }
 </script>
 
