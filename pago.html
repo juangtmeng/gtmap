@@ -118,14 +118,17 @@
     document.getElementById('spMp').style.display = 'inline-block';
     document.getElementById('txtMp').textContent = 'Preparando pago…';
     try {
-      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 25000);
+      const url = APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid);
+      const resp = await fetch(url, { redirect: 'follow' });
+      const data = await resp.json();
       if (data.error) throw new Error(data.error);
       window.location.href = data.checkout;
     } catch (err) {
       btn.disabled = false;
       document.getElementById('spMp').style.display = 'none';
       document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
-      showErr('Error al iniciar el pago: ' + err.message);
+      // Mostrar el error completo para poder diagnosticar
+      showErr('Error: ' + err.message + ' — Abrí la consola del browser (F12) para más detalle.');
     }
   }
 </script>
