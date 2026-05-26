@@ -107,21 +107,7 @@
 
   function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
 
-  function jsonp(u, timeoutMs) {
-    return new Promise((resolve, reject) => {
-      const cb = 'pgcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-      const s = document.createElement('script');
-      let done = false;
-      const timer = setTimeout(() => { if (!done){done=true; cleanup(); reject(new Error('timeout'));} }, timeoutMs || 30000);
-      function cleanup(){ try{delete window[cb];}catch(e){window[cb]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); clearTimeout(timer); }
-      window[cb] = d => { if(done)return; done=true; cleanup(); resolve(d); };
-      s.onerror = () => { if(done)return; done=true; cleanup(); reject(new Error('script_error')); };
-      s.src = u + (u.indexOf('?')!==-1?'&':'?') + 'callback=' + cb;
-      document.body.appendChild(s);
-    });
-  }
-
-  const CALENDLY_URL = 'https://calendly.com/juangtmeng/orientacion-para-auditoria-de-marketing-gtm-framework'; // ej: https://calendly.com/juanmoreno/30min
+  const CALENDLY_URL = 'https://calendly.com/juangtmeng/orientacion-para-auditoria-de-marketing-gtm-framework';
 
   function abrirCalendly() {
     window.open(CALENDLY_URL, '_blank');
@@ -135,7 +121,9 @@
     document.getElementById('spMp').style.display = 'inline-block';
     document.getElementById('txtMp').textContent = 'Preparando pago…';
     try {
-      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 25000);
+      const res = await fetch(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid));
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
       if (data.error) throw new Error(data.error);
       window.location.href = data.checkout;
     } catch (err) {
