@@ -32,6 +32,10 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .guarantee { text-align: center; font-size: 0.82rem; color: #64748b; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; }
     .guarantee b { color: #1e293b; }
+    .calendly-cta { text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid #f1f5f9; }
+    .calendly-cta p { font-size: 0.82rem; color: #94a3b8; margin-bottom: 6px; }
+    .calendly-cta a { font-size: 0.88rem; font-weight: 600; color: #3b82f6; text-decoration: none; }
+    .calendly-cta a:hover { text-decoration: underline; }
     .err { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px; display: none; }
   </style>
 </head>
@@ -69,6 +73,13 @@
 
     <div class="guarantee">
       <b>Garantía:</b> si el informe no te sirve, te devolvemos el 100%. Sin vueltas.
+    </div>
+
+    <div class="calendly-cta">
+      <p>¿Tenés dudas antes de pagar?</p>
+      <a id="calendlyBtn" href="#" onclick="abrirCalendly(); return false;">
+        Hablá con nosotros — reservá una llamada gratis →
+      </a>
     </div>
   </div>
 </div>
@@ -110,15 +121,29 @@
     });
   }
 
-  function mpPagar() {
+  const CALENDLY_URL = 'https://calendly.com/juangtmeng/orientacion-para-auditoria-de-marketing-gtm-framework'; // ej: https://calendly.com/juanmoreno/30min
+
+  function abrirCalendly() {
+    window.open(CALENDLY_URL, '_blank');
+  }
+
+  async function mpPagar() {
     document.getElementById('err').style.display = 'none';
     if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return; }
-    document.getElementById('btnMp').disabled = true;
+    const btn = document.getElementById('btnMp');
+    btn.disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';
-    document.getElementById('txtMp').textContent = 'Redirigiendo…';
-    // Navegación directa al doGet. Apps Script crea la preferencia y redirige
-    // a MP usando <a target="_top">, que navega el frame completo desde el iframe.
-    window.location.href = APPS_SCRIPT_URL + '?action=mp_pay&sid=' + encodeURIComponent(sid);
+    document.getElementById('txtMp').textContent = 'Preparando pago…';
+    try {
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 25000);
+      if (data.error) throw new Error(data.error);
+      window.location.href = data.checkout;
+    } catch (err) {
+      btn.disabled = false;
+      document.getElementById('spMp').style.display = 'none';
+      document.getElementById('txtMp').textContent = 'Pagar con Mercado Pago';
+      showErr('Error: ' + err.message);
+    }
   }
 </script>
 
