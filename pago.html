@@ -107,6 +107,22 @@
 
   function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
 
+  // Apps Script no permite fetch cross-origin (el redirect 302 a googleusercontent.com
+  // no lleva headers CORS). JSONP via script tag sí funciona porque sigue redirects sin CORS.
+  function jsonp(u, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const cb = 'pgcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+      const s = document.createElement('script');
+      let done = false;
+      const timer = setTimeout(() => { if (!done){done=true; cleanup(); reject(new Error('timeout'));} }, timeoutMs || 30000);
+      function cleanup(){ try{delete window[cb];}catch(e){window[cb]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); clearTimeout(timer); }
+      window[cb] = d => { if(done)return; done=true; cleanup(); resolve(d); };
+      s.onerror = () => { if(done)return; done=true; cleanup(); reject(new Error('No se pudo contactar al servidor de pagos.')); };
+      s.src = u + (u.indexOf('?')!==-1?'&':'?') + 'callback=' + cb;
+      document.body.appendChild(s);
+    });
+  }
+
   const CALENDLY_URL = 'https://calendly.com/juangtmeng/orientacion-para-auditoria-de-marketing-gtm-framework';
 
   function abrirCalendly() {
@@ -121,10 +137,9 @@
     document.getElementById('spMp').style.display = 'inline-block';
     document.getElementById('txtMp').textContent = 'Preparando pago…';
     try {
-      const res = await fetch(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid));
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
+      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 25000);
       if (data.error) throw new Error(data.error);
+      if (!data.checkout) throw new Error('No recibimos la URL de pago.');
       window.location.href = data.checkout;
     } catch (err) {
       btn.disabled = false;
