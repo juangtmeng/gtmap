@@ -85,7 +85,9 @@
 </div>
 
 <script>
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
+  // Worker de Cloudflare que crea la preferencia de MP (reemplazá por tu URL real,
+  // termina en .workers.dev). Apps Script ya no se usa para iniciar el pago.
+  const WORKER_URL = 'https://mp-checkout.juangtmeng.workers.dev';
   const params = new URLSearchParams(window.location.search);
   const sid = params.get('sid') || params.get('session_id') || '';
   const nombre = params.get('nombre') || '';
@@ -107,22 +109,6 @@
 
   function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
 
-  // Apps Script no permite fetch cross-origin (el redirect 302 a googleusercontent.com
-  // no lleva headers CORS). JSONP via script tag sí funciona porque sigue redirects sin CORS.
-  function jsonp(u, timeoutMs) {
-    return new Promise((resolve, reject) => {
-      const cb = 'pgcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-      const s = document.createElement('script');
-      let done = false;
-      const timer = setTimeout(() => { if (!done){done=true; cleanup(); reject(new Error('timeout'));} }, timeoutMs || 30000);
-      function cleanup(){ try{delete window[cb];}catch(e){window[cb]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); clearTimeout(timer); }
-      window[cb] = d => { if(done)return; done=true; cleanup(); resolve(d); };
-      s.onerror = () => { if(done)return; done=true; cleanup(); reject(new Error('No se pudo contactar al servidor de pagos.')); };
-      s.src = u + (u.indexOf('?')!==-1?'&':'?') + 'callback=' + cb;
-      document.body.appendChild(s);
-    });
-  }
-
   const CALENDLY_URL = 'https://calendly.com/juangtmeng/orientacion-para-auditoria-de-marketing-gtm-framework';
 
   function abrirCalendly() {
@@ -137,7 +123,8 @@
     document.getElementById('spMp').style.display = 'inline-block';
     document.getElementById('txtMp').textContent = 'Preparando pago…';
     try {
-      const data = await jsonp(APPS_SCRIPT_URL + '?action=mp_checkout&sid=' + encodeURIComponent(sid), 25000);
+      const res = await fetch(WORKER_URL + '?sid=' + encodeURIComponent(sid));
+      const data = await res.json();
       if (data.error) throw new Error(data.error);
       if (!data.checkout) throw new Error('No recibimos la URL de pago.');
       window.location.href = data.checkout;
