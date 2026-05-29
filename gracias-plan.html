@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>¡Pago confirmado! — Plan de Acción GTMAP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4EFE6;--bg-2:#ECE4D5;--paper:#FBF8F2;--ink:#1B1815;--ink-soft:#5C544A;
+  --ink-faint:#8A8175;--pine:#1F4D3F;--pine-2:#2C6B56;--line:rgba(27,24,21,.13);
+  --line-strong:rgba(27,24,21,.22);--shadow:0 22px 50px -28px rgba(31,40,33,.45);
+  --display:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+h1{font-family:var(--display);font-weight:500;line-height:1.1;letter-spacing:-.01em;font-size:clamp(28px,4.5vw,40px)}
+.card{background:var(--paper);border:1px solid var(--line-strong);box-shadow:var(--shadow);border-radius:3px;padding:48px 38px;max-width:540px;width:100%;text-align:center}
+.mark{width:64px;height:64px;border-radius:50%;background:var(--pine);display:grid;place-items:center;margin:0 auto 22px;position:relative}
+.mark .ring{position:absolute;inset:-8px;border:2px solid var(--pine-2);border-radius:50%;border-top-color:transparent;animation:spin 1.1s linear infinite;opacity:.5}
+.mark span{color:#F4EFE6;font-size:28px}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1 em{font-style:italic;font-weight:400;color:var(--pine)}
+.sub{color:var(--ink-soft);margin-top:14px;font-size:16px}
+.box{background:var(--bg-2);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:2px;padding:16px 20px;margin-top:26px;text-align:left;font-size:14.5px;color:var(--ink-soft)}
+.box b{color:var(--ink)}
+.steps{text-align:left;margin-top:24px;list-style:none}
+.steps li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--ink-soft)}
+.steps li:last-child{border-bottom:none}
+.steps .n{font-family:var(--mono);font-size:12px;color:var(--pine);min-width:22px}
+.note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:28px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark"><div class="ring"></div><span>✓</span></div>
+    <h1>¡Pago confirmado<span id="nombreSpan"></span>! <em>Estamos armando tu Plan.</em></h1>
+    <p class="sub">Tu Plan de Acción se está generando ahora mismo con tus datos reales.</p>
+
+    <div class="box">
+      📬 En <b>pocos minutos</b> te llega por mail el <b>PDF del Plan de Acción</b> completo: cronograma sprint-based, experimentos, calculadora de unit economics y glosario.
+    </div>
+
+    <ul class="steps">
+      <li><span class="n">1</span><span>El sistema corre el análisis encadenado sobre tu auditoría + framework.</span></li>
+      <li><span class="n">2</span><span>Una capa de validación automática filtra datos sin sustento antes de enviártelo.</span></li>
+      <li><span class="n">3</span><span>Te llega el PDF a tu mail. Empezá por el Sprint 1 (días 1-14).</span></li>
+    </ul>
+
+    <p class="note">¿No llegó en 15 minutos? Revisá spam o respondé el mail que te enviamos. Ya podés cerrar esta ventana.</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const nombre = params.get('nombre') || '';
+    if (nombre) document.getElementById('nombreSpan').textContent = ', ' + nombre.split(' ')[0];
+  </script>
+</body>
+</html>

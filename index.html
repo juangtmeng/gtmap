@@ -1,340 +1,856 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auditoría de Growth Marketing + GTM Framework</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-      min-height: 100vh;
-    }
-    .hero {
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      color: white;
-      padding: 48px 24px 40px;
-      text-align: center;
-    }
-    .hero h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
-    .hero p { font-size: 1rem; color: #cbd5e1; max-width: 520px; margin: 0 auto 20px; line-height: 1.6; }
-    .badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .badge {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 0.8rem;
-      color: #e2e8f0;
-    }
-    .container { max-width: 580px; margin: -20px auto 60px; padding: 0 16px; }
-    .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-      padding: 32px 28px;
-    }
-    .section-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #64748b;
-      margin-bottom: 16px;
-    }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 0.9rem; font-weight: 500; color: #374151; margin-bottom: 6px; }
-    .optional { font-size: 0.75rem; font-weight: 400; color: #9ca3af; margin-left: 4px; }
-    input[type="url"], input[type="text"], input[type="email"] {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      color: #1e293b;
-      transition: border-color 0.15s;
-      outline: none;
-    }
-    input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-    input::placeholder { color: #9ca3af; }
-    .options-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-    .option-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-    }
-    .option-card:hover { border-color: #93c5fd; background: #eff6ff; }
-    .option-card.selected { border-color: #3b82f6; background: #eff6ff; }
-    .option-card input[type="radio"] { display: none; }
-    .option-dot {
-      width: 18px; height: 18px;
-      border: 2px solid #d1d5db;
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s;
-    }
-    .option-card.selected .option-dot {
-      border-color: #3b82f6;
-      background: #3b82f6;
-    }
-    .option-card.selected .option-dot::after {
-      content: '';
-      width: 6px; height: 6px;
-      background: white;
-      border-radius: 50%;
-    }
-    .option-label { font-size: 0.9rem; font-weight: 500; color: #374151; }
-    .divider { height: 1px; background: #f1f5f9; margin: 24px 0; }
-    .submit-btn {
-      width: 100%;
-      padding: 13px;
-      background: #1e293b;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .submit-btn:hover { background: #334155; transform: translateY(-1px); }
-    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
-    .spinner {
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: none;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .error-msg {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #dc2626;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-bottom: 16px;
-      display: none;
-    }
-    .info-note {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      margin-top: 14px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vista previa de tu auditoría de Growth — en 60 segundos</title>
+<meta name="description" content="Sistema de prompts encadenados con investigación de mercado permanente. Vista previa en pantalla con 3 señales concretas sobre tu sitio. Informe completo + plan 90/180/365 opcional por mail." />
+<meta property="og:title" content="Vista previa de tu auditoría de Growth — en 60 segundos" />
+<meta property="og:description" content="3 señales concretas sobre tu sitio, en pantalla. Sistema de prompts encadenados con investigación de mercado permanente." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#F4EFE6;
+  --bg-2:#ECE4D5;
+  --paper:#FBF8F2;
+  --ink:#1B1815;
+  --ink-soft:#5C544A;
+  --ink-faint:#8A8175;
+  --pine:#1F4D3F;
+  --pine-2:#2C6B56;
+  --moss:#6B8F71;
+  --amber:#B86B22;
+  --red:#A93726;
+  --gold:#9C7A1E;
+  --line:rgba(27,24,21,.13);
+  --line-strong:rgba(27,24,21,.22);
+  --shadow:0 22px 50px -28px rgba(31,40,33,.45);
+  --display:"Fraunces",Georgia,serif;
+  --sans:"Hanken Grotesk",-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+/* paper grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.55;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+a{color:inherit}
+img{max-width:100%}
+
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.06;letter-spacing:-.01em}
+.serif-it{font-style:italic;font-weight:400}
+
+.eyebrow{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--pine);display:inline-flex;align-items:center;gap:9px;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--pine);display:inline-block}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+  font-family:var(--sans);font-weight:600;font-size:16.5px;letter-spacing:.01em;
+  padding:16px 26px;border-radius:2px;text-decoration:none;transition:.25s ease;
+}
+.btn-primary{background:var(--pine);color:#F4EFE6}
+.btn-primary:hover{background:var(--ink);transform:translateY(-2px)}
+.btn-primary .arr{transition:transform .25s ease}
+.btn-primary:hover .arr{transform:translateX(4px)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(27,24,21,.04)}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:30;backdrop-filter:blur(8px);
+  background:rgba(244,239,230,.82);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.02em;text-decoration:none}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--pine);box-shadow:0 0 0 4px rgba(31,77,63,.16)}
+.brand small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase;font-weight:400}
+.nav-cta{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;color:var(--pine);font-weight:500;border-bottom:1px solid transparent;transition:.2s}
+.nav-cta:hover{border-color:var(--pine)}
+
+/* ---------- Hero ---------- */
+.hero{padding:74px 0 60px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:54px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,68px);margin:22px 0 0}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--pine)}
+.hero .sub{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);margin-top:24px;max-width:36ch}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:30px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em}
+.meta-row span{display:inline-flex;align-items:center;gap:7px}
+.meta-row b{color:var(--pine)}
+.hero-actions{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* dossier card */
+.dossier{
+  background:var(--paper);border:1px solid var(--line-strong);box-shadow:var(--shadow);
+  border-radius:3px;transform:rotate(1.6deg);position:relative;overflow:hidden;
+}
+.dossier::after{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--pine)}
+.dossier .d-head{padding:18px 22px 14px;border-bottom:1px dashed var(--line-strong)}
+.dossier .d-klabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.dossier .d-title{font-family:var(--display);font-size:22px;margin-top:4px}
+.dossier .d-body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:13px}
+.metricline{display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:13px}
+.metricline .lbl{color:var(--ink-soft)}
+.metricline .val{font-weight:500}
+.metricline .val.bad{color:var(--red)}
+.metricline .val.good{color:var(--pine-2)}
+.dossier .tagstack{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+
+.tag{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:2px;display:inline-block;border:1px solid currentColor}
+.tag.crit{color:var(--red);background:rgba(169,55,38,.07)}
+.tag.alto{color:var(--amber);background:rgba(184,107,34,.08)}
+.tag.medio{color:var(--gold);background:rgba(156,122,30,.08)}
+.tag.win{color:var(--pine-2);background:rgba(44,107,86,.08)}
+
+/* ---------- Section scaffolding ---------- */
+section{padding:84px 0;position:relative}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--ink-faint);letter-spacing:.1em}
+.sec-head h2{font-size:clamp(30px,4.4vw,46px);max-width:22ch}
+.sec-head .lead{color:var(--ink-soft);max-width:40ch;font-size:16px}
+
+/* ---------- 01 · CÓMO FUNCIONA (Método) ---------- */
+.howit-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:44px}
+.hpillar{background:var(--bg);padding:30px 26px 28px;display:flex;flex-direction:column;gap:13px;transition:background .3s}
+.hpillar:hover{background:var(--paper)}
+.hpico{font-size:24px;line-height:1}
+.hpillar h3{font-size:21px;line-height:1.18}
+.hpillar p{font-size:15px;color:var(--ink-soft)}
+
+/* Diagrama del método */
+.howit{
+  background:var(--paper);
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  padding:clamp(20px,3vw,34px) clamp(18px,2.5vw,30px);
+  box-shadow:var(--shadow);
+}
+.howit-banner{
+  background:var(--pine);
+  color:#F4EFE6;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:11px 16px;
+  border-radius:2px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:30px;
+}
+.howit-banner-ico{font-size:13px;opacity:.85}
+.howit-flow{
+  display:flex;
+  align-items:stretch;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.howit-stage{
+  flex:1 1 130px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:15px 13px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  min-width:0;
+  position:relative;
+}
+.howit-stage-dark{
+  background:var(--pine);
+  border-color:var(--pine);
+  color:var(--paper);
+}
+.howit-stage-dark .howit-num{color:#C7D8C9}
+.howit-stage-dark p{color:#A9BBA8}
+.howit-num{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  color:var(--ink-faint);
+  font-weight:500;
+}
+.howit-stage h4{
+  font-family:var(--display);
+  font-size:17px;
+  font-weight:500;
+  line-height:1.15;
+  letter-spacing:-.01em;
+}
+.howit-stage-dark h4{color:var(--paper)}
+.howit-stage p{
+  font-family:var(--mono);
+  font-size:10.5px;
+  color:var(--ink-faint);
+  line-height:1.4;
+  letter-spacing:.02em;
+}
+.howit-arr{
+  font-family:var(--mono);
+  font-size:18px;
+  color:var(--pine);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 14px;
+}
+.howit-arr-amber{color:var(--amber);font-size:22px}
+.howit-out{
+  flex:1 1 110px;
+  background:transparent;
+  border:2px dashed var(--amber);
+  border-radius:2px;
+  padding:14px 13px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  align-items:flex-start;
+  justify-content:center;
+}
+.howit-out-label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--amber);
+}
+.howit-out strong{
+  font-family:var(--display);
+  font-size:18px;
+  font-weight:500;
+  color:var(--ink);
+  line-height:1.1;
+}
+.howit-loop{
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.03em;
+  color:var(--moss);
+  text-align:center;
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px dashed var(--line-strong);
+}
+
+/* ---------- Detect cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--bg);padding:30px 26px 32px;display:flex;flex-direction:column;gap:13px;transition:background .3s}
+.card:hover{background:var(--paper)}
+.card h3{font-size:21px;line-height:1.18}
+.card p{font-size:15px;color:var(--ink-soft)}
+
+/* ---------- Deliverable ---------- */
+.deliver{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.dlist{list-style:none;border-top:1px solid var(--line)}
+.dlist li{display:flex;gap:16px;padding:15px 4px;border-bottom:1px solid var(--line);align-items:baseline}
+.dlist .n{font-family:var(--mono);font-size:12px;color:var(--pine);min-width:26px}
+.dlist .t{font-size:16.5px;font-weight:500}
+.dlist .t small{display:block;font-weight:400;font-size:13.5px;color:var(--ink-soft);font-family:var(--sans);margin-top:1px}
+
+/* sample preview */
+.preview{position:relative;perspective:1400px}
+.pdoc{background:var(--paper);border:1px solid var(--line-strong);box-shadow:var(--shadow);border-radius:3px;padding:26px 24px;position:relative}
+.pdoc.p2{position:absolute;inset:18px -14px auto 26px;transform:rotate(-2.4deg);z-index:-1;opacity:.6;height:180px}
+.pdoc .ribbon{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#F4EFE6;background:var(--pine);padding:4px 9px;display:inline-block;border-radius:2px}
+.pdoc h4{font-family:var(--display);font-size:23px;margin:14px 0 3px;line-height:1.12}
+.pdoc .psub{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+.pdoc .plines{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.pline{height:8px;border-radius:2px;background:var(--bg-2)}
+.pline.w1{width:92%}.pline.w2{width:74%}.pline.w3{width:84%}
+.pchips{display:flex;gap:7px;margin-top:16px;flex-wrap:wrap}
+.preview .pcta{margin-top:22px}
+
+/* Price anchor box */
+.price-anchor{
+  margin-top:26px;
+  padding:18px 22px;
+  background:var(--bg-2);
+  border:1px solid var(--line-strong);
+  border-left:4px solid var(--amber);
+  border-radius:2px;
+}
+.price-anchor .pa-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);font-weight:500}
+.price-anchor .pa-main{font-family:var(--display);font-size:20px;margin-top:4px;line-height:1.3;color:var(--ink)}
+.price-anchor .pa-main b{color:var(--pine);font-weight:600}
+.price-anchor .pa-sub{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:6px;letter-spacing:.02em}
+
+/* ---------- Cases ---------- */
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.case{background:var(--paper);border:1px solid var(--line-strong);border-radius:3px;padding:32px 30px;position:relative;overflow:hidden}
+.case .crubro{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--pine);font-weight:500}
+.case .cbig{font-family:var(--display);font-size:clamp(30px,4vw,42px);line-height:1;margin:14px 0 4px;letter-spacing:-.02em}
+.case .cbig small{font-family:var(--mono);font-size:13px;letter-spacing:0;color:var(--ink-soft);display:block;margin-top:8px;font-weight:400}
+.case p{font-size:15px;color:var(--ink-soft);margin-top:16px}
+.case .cwin{margin-top:16px;display:flex;gap:9px;align-items:flex-start;font-size:14.5px}
+.case .cwin .tag{flex:none}
+
+/* ---------- Form ---------- */
+.formsec{background:var(--pine);color:#EFE9DD;border-radius:4px;padding:clamp(34px,5vw,64px);position:relative;overflow:hidden}
+.formsec::before{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.04)}
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;position:relative;z-index:2}
+.formsec .eyebrow{color:#C7D8C9}
+.formsec .eyebrow::before{background:#C7D8C9}
+.formsec h2{color:#FBF8F2;font-size:clamp(30px,4vw,44px);margin-top:18px}
+.formsec .fintro{color:#C7D2C0;margin-top:18px;font-size:16px}
+.formsec .reassure{margin-top:22px;font-family:var(--mono);font-size:12px;color:#A9BBA8;letter-spacing:.03em;line-height:1.9}
+.formsec .reassure b{color:#EFE9DD;font-weight:500}
+
+form{display:flex;flex-direction:column;gap:16px}
+.field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#B8C8B6;margin-bottom:7px}
+.field input,.field select{
+  width:100%;padding:14px 15px;border-radius:2px;border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);color:#FBF8F2;font-family:var(--sans);font-size:16px;transition:.2s;
+}
+.field input::placeholder{color:#8FA38D}
+.field input:focus,.field select:focus{outline:none;border-color:#C7D8C9;background:rgba(255,255,255,.1)}
+.field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23C7D8C9' stroke-width='1.6'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center}
+.field select option{background:#1F4D3F;color:#FBF8F2}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-btn{margin-top:6px;background:#F4EFE6;color:var(--pine);width:100%;justify-content:center}
+.form-btn:hover{background:#fff;transform:translateY(-2px)}
+.form-note{font-size:12px;color:#9CB09A;text-align:center;margin-top:2px}
+.thanks{display:none;text-align:center;padding:20px 0}
+.thanks.show{display:block;animation:fade .5s ease}
+.thanks .tk-mark{width:54px;height:54px;border-radius:50%;border:1.5px solid #C7D8C9;display:grid;place-items:center;margin:0 auto 18px;font-size:24px;color:#C7D8C9}
+.thanks h3{color:#FBF8F2;font-size:26px}
+.thanks p{color:#C7D2C0;margin-top:10px;font-size:15px}
+.err-msg{display:none;font-size:13px;color:#F2C0B6;font-family:var(--mono)}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:780px;margin:0 auto}
+details{border-bottom:1px solid var(--line);padding:6px 0}
+summary{cursor:pointer;list-style:none;padding:20px 4px;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  font-family:var(--display);font-size:clamp(18px,2.2vw,22px);font-weight:500;transition:color .2s}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--pine)}
+summary .ic{font-family:var(--mono);font-size:22px;color:var(--pine);transition:transform .3s;flex:none}
+details[open] summary .ic{transform:rotate(45deg)}
+details p{padding:0 4px 22px;color:var(--ink-soft);font-size:16px;max-width:64ch}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-2)}
+.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.foot .fbrand{font-family:var(--display);font-size:22px;font-weight:600}
+.foot .fwho{color:var(--ink-soft);font-size:14.5px;margin-top:10px;max-width:42ch}
+.foot .fcontact{font-family:var(--mono);font-size:13px;color:var(--ink-soft);text-align:right;line-height:2}
+.foot .fcontact a{color:var(--pine);text-decoration:none}
+.foot-note{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:34px;letter-spacing:.03em}
+
+/* ---------- reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero h1,.hero .sub,.hero .meta-row,.hero-actions,.hero .eyebrow{animation:rise .8s ease backwards}
+.hero .eyebrow{animation-delay:.05s}.hero h1{animation-delay:.14s}.hero .sub{animation-delay:.26s}
+.hero .meta-row{animation-delay:.36s}.hero-actions{animation-delay:.44s}
+.hero .dossier{animation:rise 1s ease .5s backwards}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  .dossier{transform:rotate(0);max-width:420px}
+  .cards{grid-template-columns:1fr 1fr}
+  .howit-pillars{grid-template-columns:1fr}
+  .deliver{grid-template-columns:1fr;gap:40px}
+  .cases{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr;gap:34px}
+  .howit-flow{flex-direction:column}
+  .howit-arr{transform:rotate(90deg);font-size:22px;flex:0 0 14px;padding:2px 0}
+  .howit-arr-amber{font-size:26px}
+  .howit-out{align-items:center;text-align:center}
+}
+@media(max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  section{padding:60px 0}
+  .cards{grid-template-columns:1fr}
+  .f-row{grid-template-columns:1fr}
+  .hero{padding:50px 0 40px}
+  .foot{flex-direction:column}.foot .fcontact{text-align:left}
+  .nav-cta{display:none}
+  .howit-banner{font-size:10.5px;letter-spacing:.08em;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>Auditoría de Growth Marketing<br>+ GTM Framework</h1>
-  <p>En 10-15 minutos recibís un diagnóstico completo de tu empresa y un plan de crecimiento a 12 meses, generado con IA sobre tus datos reales.</p>
-  <div class="badges">
-    <span class="badge">⏱ 10-15 min</span>
-    <span class="badge">📄 PDF con auditoría + framework</span>
-    <span class="badge">✉ Lo recibís por mail</span>
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="dot"></span>GTMAP <small>· growth&nbsp;audit</small></a>
+    <a href="#form" class="nav-cta">Generá tu vista previa →</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<a id="top"></a>
+<div class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">Vista previa de tu auditoría · en 60 segundos</span>
+      <h1>Tenés tráfico y tenés producto. <em>¿Por qué no se convierte en ventas?</em></h1>
+      <p class="sub">Te mostramos en pantalla 3 señales concretas sobre tu sitio — antes de mandarte el informe completo.</p>
+      <div class="meta-row">
+        <span>⏱ Resultado en pantalla en <b>menos de 1 min</b></span>
+        <span>🎯 3 hallazgos específicos sobre tu negocio</span>
+        <span>📄 Informe completo por mail (opcional)</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#form" class="btn btn-primary">Ver mi vista previa <span class="arr">→</span></a>
+        <a href="#metodo" class="btn btn-ghost">Cómo funciona el sistema</a>
+      </div>
+    </div>
+
+    <!-- dossier preview -->
+    <div class="dossier" aria-hidden="true">
+      <div class="d-head">
+        <div class="d-klabel">Auditoría de Growth · extracto</div>
+        <div class="d-title">Tu empresa</div>
+      </div>
+      <div class="d-body">
+        <div class="metricline"><span class="lbl">Visitantes / año</span><span class="val">41.181</span></div>
+        <div class="metricline"><span class="lbl">Conversión actual</span><span class="val bad">0,75%</span></div>
+        <div class="metricline"><span class="lbl">Benchmark del rubro</span><span class="val good">1,5–2%</span></div>
+        <div class="metricline"><span class="lbl">Carritos sin recuperar</span><span class="val bad">~720 / año</span></div>
+        <div class="tagstack">
+          <span class="tag crit">Crítico · Pixel</span>
+          <span class="tag alto">Alto · sin GA4</span>
+          <span class="tag medio">Medio · GEO</span>
+          <span class="tag win">Palanca · B2B</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="card">
+<!-- ============ 01 · CÓMO FUNCIONA (Método + diagrama) ============ -->
+<section id="metodo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">01 — Método</span>
+        <h2>No es un análisis genérico de IA. Es un sistema en <em class="serif-it">investigación permanente</em>.</h2>
+      </div>
+      <p class="lead">Cada respuesta tuya alimenta el siguiente análisis. El informe se construye sobre tu caso, paso a paso — no se rellena una plantilla.</p>
+    </div>
 
-    <div class="error-msg" id="errorMsg"></div>
+    <!-- 3 pilares -->
+    <div class="howit-pillars reveal">
+      <div class="hpillar">
+        <div class="hpico">🔬</div>
+        <h3>Agentes que investigan</h3>
+        <p>Equipos de investigación automatizada actualizan los benchmarks de cada vertical — semana a semana, no una vez al año.</p>
+      </div>
+      <div class="hpillar">
+        <div class="hpico">🔗</div>
+        <h3>Análisis encadenado</h3>
+        <p>Cada respuesta tuya se cruza con esos benchmarks y refina el siguiente prompt. No hay dos auditorías iguales: la tuya se construye paso a paso.</p>
+      </div>
+      <div class="hpillar">
+        <div class="hpico">🛡</div>
+        <h3>Validación automática</h3>
+        <p>Cada informe pasa por un control que detecta números sin sustento y datos no verificables. Cada cifra lleva su supuesto: nada inventado.</p>
+      </div>
+    </div>
 
-    <p class="section-title">Paso 1 de 2 — Tu empresa</p>
-
-    <form id="mainForm" onsubmit="submitForm(event)">
-
-      <div class="form-group">
-        <label for="url">¿Cuál es la URL de tu sitio web?</label>
-        <input type="url" id="url" name="url" placeholder="https://tusitio.com" required>
+    <!-- Diagrama del pipeline -->
+    <div class="howit reveal" aria-label="Diagrama del método: investigación permanente, análisis encadenado, validación automática">
+      <div class="howit-banner">
+        <span class="howit-banner-ico">◐</span>
+        Investigación de mercado permanente · benchmarks actualizados por vertical
+        <span class="howit-banner-ico">◑</span>
       </div>
 
-      <div class="form-group">
-        <label>¿Qué tipo de empresa es?</label>
-        <div class="options-grid" id="verticalGroup">
-          <label class="option-card" onclick="selectOption('vertical', 'SaaS / Software', this)">
-            <input type="radio" name="vertical" value="SaaS / Software">
-            <span class="option-dot"></span>
-            <span class="option-label">SaaS / Software</span>
-          </label>
-          <label class="option-card" onclick="selectOption('vertical', 'Ecommerce / Marca de producto', this)">
-            <input type="radio" name="vertical" value="Ecommerce / Marca de producto">
-            <span class="option-dot"></span>
-            <span class="option-label">Ecommerce / Marca de producto</span>
-          </label>
-          <label class="option-card" onclick="selectOption('vertical', 'PYME / Negocio local', this)">
-            <input type="radio" name="vertical" value="PYME / Negocio local">
-            <span class="option-dot"></span>
-            <span class="option-label">PYME / Negocio local (opera en una zona)</span>
-          </label>
-          <label class="option-card" onclick="selectOption('vertical', 'Consultoría / Servicios profesionales', this)">
-            <input type="radio" name="vertical" value="Consultoría / Servicios profesionales">
-            <span class="option-dot"></span>
-            <span class="option-label">Consultoría / Servicios profesionales</span>
-          </label>
+      <div class="howit-flow">
+        <div class="howit-stage">
+          <span class="howit-num">01 · Entrada</span>
+          <h4>Tus datos</h4>
+          <p>URL · vertical · modelo</p>
         </div>
-        <input type="hidden" id="vertical" name="vertical" required>
-      </div>
+        <div class="howit-arr" aria-hidden="true">→</div>
 
-      <div class="form-group">
-        <label>¿Cuál es tu modelo comercial?</label>
-        <div class="options-grid" id="modeloGroup">
-          <label class="option-card" onclick="selectOption('modelo', 'B2B', this)">
-            <input type="radio" name="modelo" value="B2B">
-            <span class="option-dot"></span>
-            <span class="option-label">B2B — le vendemos a empresas</span>
-          </label>
-          <label class="option-card" onclick="selectOption('modelo', 'B2C', this)">
-            <input type="radio" name="modelo" value="B2C">
-            <span class="option-dot"></span>
-            <span class="option-label">B2C — le vendemos a personas</span>
-          </label>
-          <label class="option-card" onclick="selectOption('modelo', 'Mixto', this)">
-            <input type="radio" name="modelo" value="Mixto">
-            <span class="option-dot"></span>
-            <span class="option-label">Mixto — ambos canales están activos</span>
-          </label>
+        <div class="howit-stage">
+          <span class="howit-num">02 · Análisis</span>
+          <h4>Auditoría del sitio</h4>
+          <p>web · funnel · stack</p>
         </div>
-        <input type="hidden" id="modelo" name="modelo" required>
+        <div class="howit-arr" aria-hidden="true">→</div>
+
+        <div class="howit-stage">
+          <span class="howit-num">03 · Análisis</span>
+          <h4>ICPs + Personas</h4>
+          <p>refinado con paso 02</p>
+        </div>
+        <div class="howit-arr" aria-hidden="true">→</div>
+
+        <div class="howit-stage">
+          <span class="howit-num">04 · Análisis</span>
+          <h4>Framework</h4>
+          <p>journey · KPIs · plan 90/180/365</p>
+        </div>
+        <div class="howit-arr" aria-hidden="true">→</div>
+
+        <div class="howit-stage howit-stage-dark">
+          <span class="howit-num">05 · Control</span>
+          <h4>Validación</h4>
+          <p>chequeo anti-invención</p>
+        </div>
+        <div class="howit-arr howit-arr-amber" aria-hidden="true">→</div>
+
+        <div class="howit-out">
+          <span class="howit-out-label">Output</span>
+          <strong>Tu informe</strong>
+        </div>
       </div>
 
-      <div class="form-group" id="ciudadGroup" style="display:none">
-        <label for="ciudad">¿En qué ciudad o zona opera tu empresa?</label>
-        <input type="text" id="ciudad" name="ciudad" placeholder="Ej: San Miguel de Tucumán, Argentina" maxlength="120">
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="form-group">
-        <label for="nombre">¿Cómo te llamás?</label>
-        <input type="text" id="nombre" placeholder="Tu nombre" required maxlength="80">
-      </div>
-
-      <div class="form-group">
-        <label for="email">¿A qué email te enviamos el entregable?</label>
-        <input type="email" id="email" placeholder="tu@email.com" required>
-      </div>
-
-      <div class="form-group">
-        <label for="rol">¿Cuál es tu rol? <span class="optional">(opcional)</span></label>
-        <input type="text" id="rol" placeholder="Ej: Founder, CMO, Head of Growth..." maxlength="80">
-      </div>
-
-      <button type="submit" class="submit-btn" id="submitBtn">
-        <div class="spinner" id="spinner"></div>
-        <span id="btnText">Ver mi auditoría gratis →</span>
-      </button>
-
-      <p class="info-note">En menos de un minuto ves tu auditoría en pantalla. Sin tarjeta, sin costo.</p>
-
-    </form>
+      <div class="howit-loop">↺ &nbsp;Cada paso refina el siguiente — y cruza con los benchmarks del banner superior</div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- ============ 02 · QUÉ DETECTAMOS ============ -->
+<section id="detectamos" style="background:var(--bg-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">02 — Diagnóstico</span>
+        <h2>Lo que casi siempre encontramos</h2>
+      </div>
+      <p class="lead">Patrones que se repiten en empresas que crecen sin un sistema detrás. ¿Reconocés alguno?</p>
+    </div>
+
+    <div class="cards reveal">
+      <div class="card">
+        <span class="tag crit">Crítico</span>
+        <h3>Visitas que entran y desaparecen</h3>
+        <p>Sin Pixel ni tracking, cada persona que llega y no compra se pierde para siempre. No hay forma de volver a buscarla.</p>
+      </div>
+      <div class="card">
+        <span class="tag crit">Crítico</span>
+        <h3>El lead caliente se enfría</h3>
+        <p>Carrito abandonado apagado, WhatsApp sin automatizar, respuestas de hasta 24&nbsp;hs. El que iba a comprar, compra en otro lado.</p>
+      </div>
+      <div class="card">
+        <span class="tag alto">Alto</span>
+        <h3>Vendés a ciegas</h3>
+        <p>Sin GA4, sin CRM, sin email. No sabés de dónde viene tu mejor cliente ni por qué el resto se va.</p>
+      </div>
+      <div class="card">
+        <span class="tag alto">Alto</span>
+        <h3>Tu mejor historia, sin contar</h3>
+        <p>La propuesta de valor que te diferencia de verdad casi no aparece en tus canales. Mostrás el producto, no la razón de existir.</p>
+      </div>
+      <div class="card">
+        <span class="tag medio">Medio</span>
+        <h3>Una palanca intacta</h3>
+        <p>Un canal o una temporada (B2B, fechas clave) que podría sostener tus meses flojos — y que hoy nadie está activando.</p>
+      </div>
+      <div class="card">
+        <span class="tag medio">Medio</span>
+        <h3>Invisible en los motores de IA</h3>
+        <p>Cuando te buscan en ChatGPT, Gemini o Perplexity, tu marca no aparece. El canal emergente que tu competencia todavía no ocupó.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · QUÉ RECIBÍS ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">03 — Entregable</span>
+        <h2>Qué te llevás con el informe completo</h2>
+      </div>
+      <p class="lead">Cada sección es output de un análisis específico sobre tu negocio. No es una plantilla rellenada: el sistema construye tu plan a partir de lo que respondiste.</p>
+    </div>
+
+    <div class="deliver">
+      <ul class="dlist reveal">
+        <li><span class="n">01</span><span class="t">Auditoría completa<small>12 secciones: web, social, producto, marca, stack, funnel, competencia, GEO</small></span></li>
+        <li><span class="n">02</span><span class="t">ICPs — Perfiles de cliente ideal<small>Quién te compra mejor y a quién deberías ir a buscar</small></span></li>
+        <li><span class="n">03</span><span class="t">Buyer personas<small>Decisores reales, con sus objeciones y dónde encontrarlos</small></span></li>
+        <li><span class="n">04</span><span class="t">Customer journey<small>De que te descubren hasta que recompran, touchpoint por touchpoint</small></span></li>
+        <li><span class="n">05</span><span class="t">Funnel + KPIs<small>Dónde se fuga, con benchmarks de tu rubro</small></span></li>
+        <li><span class="n">06</span><span class="t">Estrategia de contenido y stack<small>Líneas editoriales + las herramientas que te faltan</small></span></li>
+        <li><span class="n">07</span><span class="t">Plan de acción 90 / 180 / 365<small>Iniciativas priorizadas por impacto, con métricas</small></span></li>
+        <li><span class="n">08</span><span class="t">Llamada de revisión, 30 min<small>Repasamos el plan juntos y resolvemos dudas</small></span></li>
+      </ul>
+
+      <div class="preview reveal">
+        <div class="pdoc p2"></div>
+        <div class="pdoc">
+          <span class="ribbon">Auditoría real · ejemplo</span>
+          <h4>Auditoría de Growth Marketing</h4>
+          <div class="psub">Sistema de prompts encadenados · con validación automática</div>
+          <div class="plines">
+            <div class="pline w1"></div><div class="pline w3"></div><div class="pline w2"></div>
+          </div>
+          <div class="pchips">
+            <span class="tag crit">Crítico</span><span class="tag alto">Alto</span>
+            <span class="tag medio">Medio</span><span class="tag win">Fortaleza</span>
+          </div>
+          <!-- TODO: reemplazar href por el link real al PDF de muestra -->
+          <a href="#" class="btn btn-ghost pcta" target="_blank" rel="noopener">Ver una auditoría real (PDF) →</a>
+        </div>
+
+        <!-- Precio ancla -->
+        <div class="price-anchor">
+          <div class="pa-tag">Informe completo</div>
+          <div class="pa-main"><b>US$49</b> · pago único, llega por mail</div>
+          <div class="pa-sub">Una consultoría equivalente cuesta US$3.000+ y lleva semanas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · CASOS ============ -->
+<section style="background:var(--bg-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="sec-num">04 — En la práctica</span>
+        <h2>Dos diagnósticos reales</h2>
+      </div>
+      <p class="lead">Lo que el sistema encontró en empresas como la tuya.</p>
+    </div>
+
+    <div class="cases">
+      <div class="case reveal">
+        <div class="crubro">Marca de juguetes artesanales · B2C</div>
+        <div class="cbig">41.181&nbsp;visitas → 308&nbsp;ventas<small>Conversión 0,75% — la mitad del benchmark del rubro</small></div>
+        <p>Detectamos por qué tanto tráfico rendía tan poco: sin Pixel para volver a buscar a nadie, recuperación de carrito apagada (~720 carritos/año perdidos) y WhatsApp sin automatizar con respuestas de hasta 24&nbsp;hs.</p>
+        <div class="cwin"><span class="tag win">Palanca</span><span>Un canal B2B intacto que coincide justo con sus meses más flojos.</span></div>
+      </div>
+
+      <div class="case reveal">
+        <div class="crubro">Marca de nutrición funcional · B2B + ecommerce</div>
+        <div class="cbig">128&nbsp;activos · 300&nbsp;dormidos<small>Mayoristas sin un solo análisis detrás</small></div>
+        <p>Definimos el ICP mayorista, el scoring para priorizarlos y un proceso de onboarding que hoy ni existía ("no tengo registro"), para activar la palanca de escala más clara del negocio: el canal B2B.</p>
+        <div class="cwin"><span class="tag win">Objetivo</span><span>Duplicar facturación con un sistema replicable, no a fuerza de intuición.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORMULARIO ============ -->
+<section id="form">
+  <div class="wrap">
+    <div class="formsec">
+      <div class="form-grid">
+        <div>
+          <span class="eyebrow">Empezá ahora</span>
+          <h2>Generá tu vista previa</h2>
+          <p class="fintro">Con 3 datos arrancamos el análisis. En menos de un minuto ves tu diagnóstico en pantalla; si querés el informe completo (US$49), te llega por mail en minutos.</p>
+          <div class="reassure">
+            ✓ <b>Tus datos son confidenciales</b><br>
+            ✓ <b>Cada dato lleva su supuesto</b> — nada inventado<br>
+            ✓ Sin compromiso de compra
+          </div>
+        </div>
+
+        <div>
+          <form id="auditForm" novalidate>
+            <div class="field">
+              <label for="sitio_web">URL de tu sitio web</label>
+              <input type="url" id="sitio_web" name="sitio_web" placeholder="https://tusitio.com" required />
+            </div>
+            <div class="f-row">
+              <div class="field">
+                <label for="tipo_empresa">Tipo de empresa</label>
+                <select id="tipo_empresa" name="tipo_empresa" required>
+                  <option value="" disabled selected>Elegí una opción</option>
+                  <option>SaaS / Software</option>
+                  <option>Ecommerce / Marca de producto</option>
+                  <option>PYME / Negocio local</option>
+                  <option>Consultoría / Servicios profesionales</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="modelo_comercial">Modelo comercial</label>
+                <select id="modelo_comercial" name="modelo_comercial" required>
+                  <option value="" disabled selected>Elegí una opción</option>
+                  <option>B2B — le vendemos a empresas</option>
+                  <option>B2C — le vendemos a personas</option>
+                  <option>Mixto — ambos canales</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="zona">Ciudad o zona donde operás</label>
+              <input type="text" id="zona" name="zona" placeholder="Ej: Córdoba, Argentina" required />
+            </div>
+            <div class="f-row">
+              <div class="field">
+                <label for="nombre">Tu nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre y apellido" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="vos@empresa.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="rol">Tu rol <span style="text-transform:none;letter-spacing:0">(opcional)</span></label>
+              <input type="text" id="rol" name="rol" placeholder="Founder, CMO, Head of Growth…" />
+            </div>
+            <button type="submit" class="btn form-btn">Ver mi vista previa →</button>
+            <div class="err-msg" id="errMsg">Revisá los campos marcados e intentá de nuevo.</div>
+            <p class="form-note">Al enviar aceptás que usemos estos datos solo para generar y entregarte tu vista previa.</p>
+          </form>
+
+          <!-- Estado de éxito -->
+          <div class="thanks" id="thanks">
+            <div class="tk-mark">✓</div>
+            <h3>¡Listo! Estamos analizando tu empresa.</h3>
+            <p>En los próximos segundos vas a ver tu vista previa. Si querés el informe completo, lo activás desde ahí.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal" style="justify-content:center;text-align:center;flex-direction:column;align-items:center">
+      <span class="sec-num">05 — Preguntas</span>
+      <h2 style="max-width:none">Lo que solés querer saber</h2>
+    </div>
+    <div class="faq reveal">
+      <details open>
+        <summary>¿Qué cuesta? ¿Hay algo pago? <span class="ic">+</span></summary>
+        <p>La <b>vista previa</b> (resumen + 3 hallazgos en pantalla) no tiene costo y la recibís al instante. El <b>informe completo</b> — auditoría de 12 secciones + ICPs + buyer personas + customer journey + plan 90/180/365 + llamada de revisión — tiene un precio único de <b>US$49</b> y te llega por mail en pocos minutos. Si la vista previa no te aporta valor, no hay nada que pagar.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto tarda? <span class="ic">+</span></summary>
+        <p>La vista previa aparece en pantalla en menos de un minuto. Si decidís pagar el informe completo, el documento te llega por mail en pocos minutos más — el sistema corre los análisis encadenados y una capa de validación automática que filtra datos sin sustento.</p>
+      </details>
+      <details>
+        <summary>¿Por qué dicen que es un "sistema", no una IA cualquiera? <span class="ic">+</span></summary>
+        <p>Porque no es un solo prompt mandado a un modelo. Es una cadena de análisis donde cada paso usa los hallazgos del anterior, cruzados con benchmarks que agentes de investigación actualizan semana a semana por vertical. Por eso dos negocios distintos reciben informes estructuralmente distintos — no es una plantilla.</p>
+      </details>
+      <details>
+        <summary>¿Qué hacen con mis datos? <span class="ic">+</span></summary>
+        <p>Los usamos únicamente para generar y entregarte tu auditoría. No los vendemos ni los compartimos con terceros. Si querés que los borremos después, lo hacemos.</p>
+      </details>
+      <details>
+        <summary>¿Sirve para mi tipo de negocio? <span class="ic">+</span></summary>
+        <p>Funciona para SaaS, ecommerce, marcas de producto, PYMEs y consultorías — B2B, B2C o mixto. Como el análisis es encadenado, el framework se adapta: si vendés a empresas trae scoring de mayoristas; si vendés a personas, profundiza en recompra y recorrido emocional.</p>
+      </details>
+      <details>
+        <summary>¿Cómo se asegura que la IA no invente datos? <span class="ic">+</span></summary>
+        <p>El sistema trabaja sobre tus datos reales y tiene reglas duras: cada número lleva su supuesto explícito y, si falta un dato, queda como campo a completar — nunca se inventa. Además, cada informe pasa por una capa de validación automática que detecta cifras sin sustento y datos no verificables antes de que te llegue. Por eso no es un reporte genérico ni un copy-paste de plantilla.</p>
+      </details>
+      <details>
+        <summary>¿Qué pasa después de recibir el informe? <span class="ic">+</span></summary>
+        <p>Tenés todo para ejecutar por tu cuenta, sección por sección. Y si querés, agendamos una llamada de 30 minutos (incluida en el precio) para repasar el plan juntos y decidir prioridades. Sin presión de venta.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="fbrand"><span style="color:var(--pine)">●</span> GTMAP</div>
+      <p class="fwho">Sistema de auditoría de Growth Marketing y GTM Frameworks con prompts encadenados e investigación de mercado permanente, por <b>Juan Pablo Moreno</b>. Unquillo, Córdoba, Argentina.</p>
+    </div>
+    <div class="fcontact">
+      <a href="mailto:juangtmeng@gmail.com">juangtmeng@gmail.com</a><br>
+      <a href="#form">Generá tu vista previa →</a>
+    </div>
+  </div>
+  <div class="wrap"><p class="foot-note">© <span id="year"></span> GTMAP · Prompts encadenados · Investigación permanente · Validación automática</p></div>
+</footer>
 
 <script>
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT2tU2ZC8J7723IUhgTYthWpu66_dQvJky7V36wuTOHPzkfzIDs4y8eBSZ6AeD9FOOuA/exec';
+/* ====== CONFIG — editá esto ====== */
+// URL del Apps Script (la deployment nueva que ya funciona).
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTsAzNH8hG18m3sCDlu15-L4UTJ5Pg3akbv4vPo0bDixznsoWIBpGijq97PyP1SafYQw/exec";
+// URL del paso siguiente (cuestionario / preview). Vacío = solo muestra el "gracias".
+const NEXT_URL   = "cuestionario.html";
+/* ================================= */
 
-  const selectedValues = { vertical: '', modelo: '' };
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  function selectOption(field, value, element) {
-    selectedValues[field] = value;
-    document.getElementById(field).value = value;
-    const group = document.getElementById(field + 'Group');
-    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-    element.classList.add('selected');
+/* scroll reveal */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-    // La ciudad solo es relevante para PYME / negocio local (opera en una zona).
-    // SaaS (global/remoto), e-commerce (envía a cualquier lado) y consultoría no la necesitan.
-    if (field === 'vertical') {
-      // Consultoría / Servicios profesionales = camino white-label: derivamos al configurador.
-      if (value.includes('Consultoría') || value.includes('Servicios')) {
-        window.location.href = 'whitelabel.html';
-        return;
-      }
-      const esLocal = value.includes('PYME') || value.includes('Negocio local');
-      document.getElementById('ciudadGroup').style.display = esLocal ? 'block' : 'none';
+/* form submit → Apps Script (Google Sheet) */
+const form   = document.getElementById('auditForm');
+const thanks = document.getElementById('thanks');
+const errMsg = document.getElementById('errMsg');
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  errMsg.style.display='none';
+
+  if(!form.checkValidity()){
+    form.reportValidity();
+    return;
+  }
+
+  const btn = form.querySelector('button[type=submit]');
+  const original = btn.innerHTML;
+  btn.innerHTML = 'Enviando…';
+  btn.disabled = true;
+
+  const data = new FormData(form);
+  data.append('timestamp', new Date().toISOString());
+
+  try{
+    if(SCRIPT_URL && !SCRIPT_URL.startsWith('PEGÁ')){
+      // Apps Script Web Apps no devuelven CORS abiertos: usamos no-cors.
+      // La fila se escribe igual; la respuesta es opaca, así que tratamos el envío como exitoso.
+      await fetch(SCRIPT_URL, { method:'POST', body:data, mode:'no-cors' });
+    } else {
+      console.warn('SCRIPT_URL sin configurar — mostrando éxito en modo demo.');
+      await new Promise(r=>setTimeout(r,600));
     }
+    form.style.display='none';
+    thanks.classList.add('show');
+    if(NEXT_URL){ setTimeout(()=>{ window.location.href = NEXT_URL; }, 1400); }
+  }catch(err){
+    console.error(err);
+    btn.innerHTML = original;
+    btn.disabled = false;
+    errMsg.textContent = 'No pudimos enviar el formulario. Probá de nuevo o escribinos por mail.';
+    errMsg.style.display='block';
   }
-
-  function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-      const r = Math.random() * 16 | 0;
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-  }
-
-  function showError(msg) {
-    const el = document.getElementById('errorMsg');
-    el.textContent = msg;
-    el.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function hideError() {
-    document.getElementById('errorMsg').style.display = 'none';
-  }
-
-  async function submitForm(e) {
-    e.preventDefault();
-    hideError();
-
-    const url = document.getElementById('url').value.trim();
-    const ciudad = document.getElementById('ciudad').value.trim();
-    const vertical = document.getElementById('vertical').value;
-    const modelo = document.getElementById('modelo').value;
-    const nombre = document.getElementById('nombre').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const rol = document.getElementById('rol').value.trim();
-
-    if (!vertical) return showError('Por favor seleccioná el tipo de empresa.');
-    if (!modelo) return showError('Por favor seleccioná el modelo comercial.');
-
-    const esLocal = vertical.includes('PYME') || vertical.includes('Negocio local');
-    if (esLocal && !ciudad) return showError('Por favor indicá la ciudad o zona donde opera tu empresa.');
-
-    const sessionId = generateUUID();
-    const data = { type: 'entrada', sessionId, url, ciudad, vertical, modelo, nombre, email, rol };
-
-    // Mostrar loading
-    document.getElementById('submitBtn').disabled = true;
-    document.getElementById('spinner').style.display = 'block';
-    document.getElementById('btnText').textContent = 'Iniciando auditoría...';
-
-    // Enviar a Apps Script (fire and forget — no esperamos respuesta)
-    try {
-      fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data)
-      });
-    } catch (err) {
-      // no-cors puede lanzar error en algunos browsers, es normal
-    }
-
-    // Redirigir a la pantalla de preview con los datos en la URL (incluye url y ciudad para el teaser)
-    const params = new URLSearchParams({ session_id: sessionId, url, ciudad, vertical, modelo, nombre, email });
-    setTimeout(() => {
-      window.location.href = 'preview.html?' + params.toString();
-    }, 800);
-  }
+});
 </script>
-
 </body>
 </html>

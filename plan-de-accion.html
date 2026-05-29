@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plan de Acción ejecutivo — GTMAP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4EFE6;--bg-2:#ECE4D5;--paper:#FBF8F2;--ink:#1B1815;--ink-soft:#5C544A;
+  --ink-faint:#8A8175;--pine:#1F4D3F;--pine-2:#2C6B56;--amber:#B86B22;--red:#A93726;
+  --line:rgba(27,24,21,.13);--line-strong:rgba(27,24,21,.22);--shadow:0 22px 50px -28px rgba(31,40,33,.45);
+  --display:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 20px}
+h1,h2{font-family:var(--display);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+.wrap{max-width:680px;margin:0 auto;padding:56px 0 72px}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pine);display:inline-flex;align-items:center;gap:9px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--pine);display:inline-block}
+h1{font-size:clamp(32px,5vw,46px);margin:18px 0 0}
+h1 em{font-style:italic;font-weight:400;color:var(--pine)}
+.sub{font-size:clamp(16px,2vw,19px);color:var(--ink-soft);margin-top:18px}
+.card{background:var(--paper);border:1px solid var(--line-strong);box-shadow:var(--shadow);border-radius:3px;padding:34px 30px;margin-top:36px}
+.price{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:22px}
+.price .amount{font-family:var(--display);font-size:48px;font-weight:600;color:var(--ink)}
+.price .cur{font-family:var(--mono);font-size:13px;color:var(--ink-soft);letter-spacing:.04em}
+.price .anchor{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-left:auto;text-align:right;line-height:1.5}
+.incluye{list-style:none}
+.incluye li{display:flex;gap:12px;padding:9px 0;font-size:15.5px;color:var(--ink-soft);align-items:flex-start}
+.incluye li b{color:var(--ink);font-weight:600}
+.ic{color:var(--pine-2);font-weight:700;flex:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;cursor:pointer;border:none;
+  font-family:var(--sans);font-weight:600;font-size:17px;padding:17px 26px;border-radius:2px;text-decoration:none;
+  background:var(--pine);color:#F4EFE6;transition:.2s ease;margin-top:26px}
+.btn:hover{background:var(--ink);transform:translateY(-2px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.spinner{width:17px;height:17px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.trust{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);text-align:center;margin-top:16px;letter-spacing:.03em}
+.err{background:#fbeae7;border:1px solid #e8c4bc;color:var(--red);padding:11px 15px;border-radius:2px;font-size:14px;margin-top:18px;display:none;font-family:var(--mono)}
+.foot{text-align:center;margin-top:40px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">Upgrade de tu informe</span>
+  <h1>Llevá tu informe <em>a la acción</em>.</h1>
+  <p class="sub">Ya tenés el diagnóstico. Esto es la operación: qué hacés cada semana, con qué herramienta y a qué costo, empezando el lunes que viene.</p>
+
+  <div class="card">
+    <div class="price">
+      <span class="amount">US$29</span>
+      <span class="cur">pago único<br>ARS 29.000</span>
+      <span class="anchor">Una consultoría de<br>implementación: US$1.500+</span>
+    </div>
+
+    <ul class="incluye">
+      <li><span class="ic">✓</span> <span><b>Cronograma sprint-based</b> de 90 días — 6 sprints quincenales con KPI de salida</span></li>
+      <li><span class="ic">✓</span> <span><b>Quick wins días 1-14</b> — lo que ejecutás esta semana sin gastar nada</span></li>
+      <li><span class="ic">✓</span> <span><b>Stack tecnológico con precios</b> reales por herramienta</span></li>
+      <li><span class="ic">✓</span> <span><b>3-5 experimentos de growth</b> con hipótesis formal y métrica de éxito</span></li>
+      <li><span class="ic">✓</span> <span><b>Calculadora de unit economics</b> — CAC, LTV, payback con 3 escenarios</span></li>
+      <li><span class="ic">✓</span> <span><b>Mapa de proveedores</b> sugeridos por tarea</span></li>
+      <li><span class="ic">✓</span> <span><b>Registro de riesgos</b> con señales tempranas</span></li>
+      <li><span class="ic">✓</span> <span><b>Glosario completo</b> de toda la terminología de tus dos informes</span></li>
+    </ul>
+
+    <button class="btn" id="btnPagar" onclick="pagar()">
+      <span class="spinner" id="sp"></span>
+      <span id="txt">Activar mi Plan de Acción · US$29 →</span>
+    </button>
+    <div class="err" id="err"></div>
+    <div class="trust">Pago seguro · Mercado Pago · Recibís el Plan en minutos</div>
+  </div>
+
+  <div class="foot">GTMAP · Plan de Acción ejecutivo</div>
+</div>
+
+<script>
+  const WORKER_URL = 'https://mp-checkout.juangtmeng.workers.dev';
+  const params = new URLSearchParams(location.search);
+  const session = params.get('session') || params.get('sid') || '';
+
+  function showErr(m){ const e=document.getElementById('err'); e.textContent=m; e.style.display='block'; }
+
+  // Si MP devolvió con fallo
+  if (params.get('status') === 'failure') {
+    showErr('El pago no se completó. Podés intentarlo nuevamente.');
+  }
+  if (!session) {
+    showErr('Link inválido. Abrí el Plan de Acción desde el mail que te enviamos.');
+    document.getElementById('btnPagar').disabled = true;
+  }
+
+  async function pagar(){
+    document.getElementById('err').style.display='none';
+    if(!session){ showErr('No encontramos tu sesión. Volvé a abrir el link del mail.'); return; }
+    const btn=document.getElementById('btnPagar');
+    btn.disabled=true;
+    document.getElementById('sp').style.display='inline-block';
+    document.getElementById('txt').textContent='Preparando pago…';
+    try{
+      const res = await fetch(WORKER_URL + '/create-preference-addon?session=' + encodeURIComponent(session));
+      const data = await res.json();
+      if(data.error) throw new Error(data.error);
+      if(!data.checkout) throw new Error('No recibimos la URL de pago.');
+      window.location.href = data.checkout;
+    }catch(err){
+      btn.disabled=false;
+      document.getElementById('sp').style.display='none';
+      document.getElementById('txt').textContent='Activar mi Plan de Acción · US$29 →';
+      showErr('Error: ' + err.message);
+    }
+  }
+</script>
+</body>
+</html>
