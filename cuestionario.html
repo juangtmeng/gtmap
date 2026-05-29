@@ -4,94 +4,103 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cuestionario — GTM Framework</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    :root{
+      --bg:#F4EFE6;--bg-2:#ECE4D5;--paper:#FBF8F2;--ink:#1B1815;--ink-soft:#5C544A;
+      --ink-faint:#8A8175;--pine:#1F4D3F;--pine-2:#2C6B56;--red:#A93726;
+      --line:rgba(27,24,21,.13);--line-strong:rgba(27,24,21,.22);--shadow:0 22px 50px -28px rgba(31,40,33,.45);
+      --display:"Fraunces",Georgia,serif;--sans:"Hanken Grotesk",-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #1e293b; min-height: 100vh; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--ink); min-height: 100vh; -webkit-font-smoothing:antialiased; }
     .hero {
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      color: white;
-      padding: 40px 24px 36px;
+      background: linear-gradient(135deg, #0f2e25 0%, var(--pine) 100%);
+      color: #F4EFE6;
+      padding: 48px 24px 40px;
       text-align: center;
     }
-    .hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
-    .hero p { font-size: 0.95rem; color: #cbd5e1; max-width: 480px; margin: 0 auto; line-height: 1.6; }
-    .container { max-width: 580px; margin: -20px auto 60px; padding: 0 16px; }
+    .hero h1 { font-family: var(--display); font-weight: 500; font-size: clamp(1.5rem,3.4vw,2rem); letter-spacing:-.01em; margin-bottom: 10px; }
+    .hero p { font-family: var(--mono); font-size: 0.8rem; letter-spacing:.03em; color: #C7D2C0; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+    .container { max-width: 600px; margin: -20px auto 64px; padding: 0 16px; }
     .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-      padding: 32px 28px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: 3px;
+      box-shadow: var(--shadow);
+      padding: 34px 30px;
       margin-bottom: 16px;
     }
     .section-title {
-      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.08em; color: #64748b; margin-bottom: 20px;
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--pine); margin-bottom: 24px;
     }
-    .question { margin-bottom: 24px; }
-    .question-label { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 10px; display: block; }
-    .question-desc { font-size: 0.82rem; color: #64748b; margin-bottom: 10px; font-weight: 400; }
+    .question { margin-bottom: 26px; }
+    .question-label { font-family: var(--display); font-size: 1.08rem; font-weight: 500; line-height:1.25; color: var(--ink); margin-bottom: 10px; display: block; }
+    .question-desc { font-size: 0.86rem; color: var(--ink-soft); margin-bottom: 12px; font-weight: 400; line-height:1.5; }
     .options-grid { display: grid; grid-template-columns: 1fr; gap: 7px; }
     .option-card {
       display: flex; align-items: center; gap: 12px;
-      padding: 11px 14px; border: 1.5px solid #e2e8f0;
-      border-radius: 9px; cursor: pointer;
+      padding: 12px 15px; border: 1px solid var(--line-strong);
+      border-radius: 2px; cursor: pointer; background: var(--bg);
       transition: all 0.15s; user-select: none;
     }
-    .option-card:hover { border-color: #93c5fd; background: #eff6ff; }
-    .option-card.selected { border-color: #3b82f6; background: #eff6ff; }
+    .option-card:hover { border-color: var(--pine-2); background: var(--bg-2); }
+    .option-card.selected { border-color: var(--pine); background: rgba(31,77,63,.06); }
     .option-dot {
-      width: 16px; height: 16px; border: 2px solid #d1d5db; border-radius: 50%;
+      width: 16px; height: 16px; border: 2px solid var(--ink-faint); border-radius: 50%;
       flex-shrink: 0; display: flex; align-items: center; justify-content: center;
       transition: all 0.15s;
     }
-    .option-card.selected .option-dot { border-color: #3b82f6; background: #3b82f6; }
+    .option-card.selected .option-dot { border-color: var(--pine); background: var(--pine); }
     .option-card.selected .option-dot::after {
-      content: ''; width: 5px; height: 5px; background: white; border-radius: 50%;
+      content: ''; width: 5px; height: 5px; background: #F4EFE6; border-radius: 50%;
     }
-    .option-card.multi.selected { border-color: #3b82f6; background: #eff6ff; }
+    .option-card.multi.selected { border-color: var(--pine); background: rgba(31,77,63,.06); }
     .option-check {
-      width: 16px; height: 16px; border: 2px solid #d1d5db; border-radius: 4px;
+      width: 16px; height: 16px; border: 2px solid var(--ink-faint); border-radius: 3px;
       flex-shrink: 0; display: flex; align-items: center; justify-content: center;
       transition: all 0.15s;
     }
     .option-card.multi.selected .option-check {
-      border-color: #3b82f6; background: #3b82f6;
+      border-color: var(--pine); background: var(--pine);
     }
     .option-card.multi.selected .option-check::after {
-      content: '✓'; font-size: 10px; color: white; font-weight: 700;
+      content: '✓'; font-size: 10px; color: #F4EFE6; font-weight: 700;
     }
-    .option-label { font-size: 0.88rem; font-weight: 500; color: #374151; }
+    .option-label { font-size: 0.9rem; font-weight: 500; color: var(--ink); }
     textarea {
-      width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;
-      font-size: 0.9rem; font-family: inherit; color: #1e293b; resize: vertical;
-      min-height: 90px; outline: none; transition: border-color 0.15s;
+      width: 100%; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: 2px;
+      font-size: 0.92rem; font-family: inherit; color: var(--ink); resize: vertical; background: var(--bg);
+      min-height: 92px; outline: none; transition: border-color 0.15s;
     }
-    textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-    textarea::placeholder { color: #9ca3af; }
-    .divider { height: 1px; background: #f1f5f9; margin: 8px 0 24px; }
+    textarea:focus { border-color: var(--pine); box-shadow: 0 0 0 3px rgba(31,77,63,0.1); }
+    textarea::placeholder { color: var(--ink-faint); }
+    .divider { height: 1px; background: var(--line); margin: 8px 0 24px; }
     .vertical-section { display: none; }
     .vertical-section.visible { display: block; }
     .submit-btn {
-      width: 100%; padding: 13px; background: #1e293b; color: white; border: none;
-      border-radius: 10px; font-size: 0.95rem; font-weight: 600; font-family: inherit;
-      cursor: pointer; transition: all 0.15s;
+      width: 100%; padding: 16px; background: var(--pine); color: #F4EFE6; border: none;
+      border-radius: 2px; font-size: 1rem; font-weight: 600; font-family: var(--sans);
+      cursor: pointer; transition: all 0.2s;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .submit-btn:hover { background: #334155; transform: translateY(-1px); }
-    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+    .submit-btn:hover { background: var(--ink); transform: translateY(-2px); }
+    .submit-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
     .spinner {
-      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white; border-radius: 50%;
+      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff; border-radius: 50%;
       animation: spin 0.7s linear infinite; display: none;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .error-msg {
-      background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;
-      padding: 10px 14px; border-radius: 8px; font-size: 0.85rem;
+      background: #fbeae7; border: 1px solid #e8c4bc; color: var(--red);
+      padding: 11px 15px; border-radius: 2px; font-size: 0.85rem; font-family: var(--mono);
       margin-bottom: 16px; display: none;
     }
-    .required-note { font-size: 0.78rem; color: #94a3b8; margin-top: 6px; }
+    .required-note { font-size: 0.78rem; color: var(--ink-faint); margin-top: 6px; }
   </style>
 </head>
 <body>
