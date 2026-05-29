@@ -726,11 +726,29 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
             <p class="form-note">Al enviar se dispara el primer prompt de GTM y comienza el análisis de tu web en función de los datos que nos compartiste.</p>
           </form>
 
-          <!-- Estado de éxito -->
+          <!-- Diagnóstico inicial inline -->
+          <style>
+            .ex-loading{text-align:center;padding:12px 0}
+            .ex-spin{width:30px;height:30px;border:3px solid rgba(255,255,255,.25);border-top-color:#C7D8C9;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+            .ex-body{text-align:left;max-height:340px;overflow-y:auto;margin-top:4px}
+            .ex-body h2{font-family:var(--display);font-weight:500;font-size:1.05rem;color:#FBF8F2;margin:12px 0 6px}
+            .ex-body p,.ex-body li{font-size:.92rem;color:#C7D2C0;line-height:1.55}
+            .ex-body ul{padding-left:18px;margin:6px 0}
+            .ex-body b{color:#FBF8F2}
+            #exContinue{margin-top:20px;background:#F4EFE6;color:var(--pine)}
+            #exContinue:hover{background:#fff}
+          </style>
           <div class="thanks" id="thanks">
-            <div class="tk-mark">✓</div>
-            <h3>¡Listo! Arrancamos.</h3>
-            <p>Ahora te hacemos unas preguntas rápidas para generar tu informe.</p>
+            <div class="ex-loading" id="exLoading">
+              <div class="ex-spin"></div>
+              <h3>Leyendo tu sitio…</h3>
+              <p>Tu diagnóstico inicial aparece en segundos.</p>
+            </div>
+            <div id="exResult" style="display:none">
+              <h3 style="margin-bottom:4px">Tu diagnóstico inicial</h3>
+              <div class="ex-body" id="exBody"></div>
+              <a class="btn form-btn" id="exContinue" href="#">Continuar al cuestionario →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -848,9 +866,26 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
 /* ====== CONFIG — editá esto ====== */
 // URL del Apps Script (la deployment nueva que ya funciona).
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTsAzNH8hG18m3sCDlu15-L4UTJ5Pg3akbv4vPo0bDixznsoWIBpGijq97PyP1SafYQw/exec";
-// Próximo paso del funnel: index → cuestionario → pago.
+// Próximo paso del funnel: index → (diagnóstico inline) → cuestionario → pago.
 const NEXT_URL   = "cuestionario.html";
+// Worker de Cloudflare (proxy del teaser/diagnóstico con CORS).
+const WORKER_URL = "https://mp-checkout.juangtmeng.workers.dev";
 /* ================================= */
+
+// Markdown mínimo → HTML (para el diagnóstico inline)
+function mdToHtml(md){
+  const esc = x => x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const lines = md.split('\n'); let html='', inList=false;
+  for (let raw of lines){
+    const line = raw.trim();
+    if(!line){ if(inList){html+='</ul>';inList=false;} continue; }
+    if(/^#{1,3}\s/.test(line)){ if(inList){html+='</ul>';inList=false;} html+='<h2>'+esc(line.replace(/^#{1,3}\s/,''))+'</h2>'; }
+    else if(/^[-*]\s/.test(line)){ if(!inList){html+='<ul>';inList=true;} html+='<li>'+esc(line.replace(/^[-*]\s/,''))+'</li>'; }
+    else { if(inList){html+='</ul>';inList=false;} html+='<p>'+esc(line)+'</p>'; }
+  }
+  if(inList)html+='</ul>';
+  return html.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+}
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -919,12 +954,27 @@ form.addEventListener('submit', async (e)=>{
     }
     form.style.display='none';
     thanks.classList.add('show');
-    // Parámetros que necesita preview.html (y que pasa al cuestionario)
+
+    // Botón continuar → cuestionario, con todos los params
     const qs = new URLSearchParams({
       session_id: sessionId, url: payload.url, vertical: payload.vertical,
       modelo: payload.modelo, nombre: payload.nombre, email: payload.email, ciudad: payload.ciudad
     });
-    setTimeout(()=>{ window.location.href = NEXT_URL + '?' + qs.toString(); }, 1400);
+    document.getElementById('exContinue').href = NEXT_URL + '?' + qs.toString();
+
+    // Generar el diagnóstico inicial inline (vía Worker /teaser)
+    try{
+      const tq = new URLSearchParams({ url: payload.url, vertical: payload.vertical });
+      const r = await fetch(WORKER_URL + '/teaser?' + tq.toString());
+      const d = await r.json();
+      if(d && d.teaser){ document.getElementById('exBody').innerHTML = mdToHtml(d.teaser); }
+      else { throw new Error('sin teaser'); }
+    }catch(e){
+      document.getElementById('exBody').innerHTML =
+        '<p>No pudimos generar el diagnóstico inicial ahora, pero podés continuar con el cuestionario para generar tu informe completo.</p>';
+    }
+    document.getElementById('exLoading').style.display='none';
+    document.getElementById('exResult').style.display='block';
   }catch(err){
     console.error(err);
     btn.innerHTML = original;
