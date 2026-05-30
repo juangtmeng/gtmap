@@ -62,7 +62,7 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.06;letter-spac
   font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--pine);display:inline-flex;align-items:center;gap:9px;
 }
-.eyebrow::before{content:"";width:26px;height:1px;background:var(--pine);display:inline-block}
+.eyebrow::before{display:none}
 
 /* ---------- Buttons ---------- */
 .btn{
@@ -88,7 +88,7 @@ header{position:sticky;top:0;z-index:30;backdrop-filter:blur(8px);
 .nav-cta:hover{border-color:var(--pine)}
 
 /* ---------- Hero ---------- */
-.hero{padding:74px 0 60px;position:relative}
+.hero{padding-top:74px;padding-bottom:60px;position:relative}
 .hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:54px;align-items:center}
 .hero h1{font-size:clamp(40px,6vw,68px);margin:22px 0 0}
 .hero h1 em{font-style:italic;font-weight:400;color:var(--pine)}
@@ -390,7 +390,7 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
   section{padding:60px 0}
   .cards{grid-template-columns:1fr}
   .f-row{grid-template-columns:1fr}
-  .hero{padding:50px 0 40px}
+  .hero{padding-top:50px;padding-bottom:40px}
   .foot{flex-direction:column}.foot .fcontact{text-align:left}
   .nav-cta{display:none}
   .howit-banner{font-size:10.5px;letter-spacing:.08em;gap:8px}
@@ -723,7 +723,7 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
             </div>
             <button type="submit" class="btn form-btn">Empezar mi auditoría →</button>
             <div class="err-msg" id="errMsg">Revisá los campos marcados e intentá de nuevo.</div>
-            <p class="form-note">Al enviar se dispara el primer prompt de GTM y comienza el análisis de tu web en función de los datos que nos compartiste.</p>
+            <p class="form-note">Al enviar se dispara el primer prompt de GTM y comienza el análisis de tu web en función de los datos que nos compartiste. Vas a poder ver un primer diagnóstico sin cargo.</p>
           </form>
 
           <!-- Diagnóstico inicial inline -->
