@@ -11,7 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -81,10 +81,10 @@ h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.06;letter-spac
 header{position:sticky;top:0;z-index:30;backdrop-filter:blur(8px);
   background:rgba(244,239,230,.82);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.02em;text-decoration:none}
+.brand{display:flex;align-items:center;gap:9px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:21px;letter-spacing:-.01em;text-decoration:none}
 .brand .logo-mark{display:inline-flex;flex:none}
 .brand .logo-word{color:var(--ink)}
-.logo-accent{color:var(--pine)}
+.logo-accent{color:var(--pine-2)}
 .brand small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase;font-weight:400}
 .nav-cta{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-decoration:none;color:var(--pine);font-weight:500;border-bottom:1px solid transparent;transition:.2s}
 .nav-cta:hover{border-color:var(--pine)}
@@ -356,7 +356,7 @@ details p{padding:0 4px 22px;color:var(--ink-soft);font-size:16px;max-width:64ch
 /* ---------- Footer ---------- */
 footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-2)}
 .foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
-.foot .fbrand{font-family:var(--display);font-size:22px;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.foot .fbrand{font-family:"Space Grotesk",sans-serif;font-size:22px;font-weight:700;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:8px}
 .foot .fwho{color:var(--ink-soft);font-size:14.5px;margin-top:10px;max-width:42ch}
 .foot .fcontact{font-family:var(--mono);font-size:13px;color:var(--ink-soft);text-align:right;line-height:2}
 .foot .fcontact a{color:var(--pine);text-decoration:none}
@@ -407,11 +407,12 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
   <div class="wrap nav">
     <a href="#top" class="brand" aria-label="GTMAP · growth audit">
       <span class="logo-mark" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#1F4D3F" stroke-width="1.6"/>
-          <path d="M12 4.5 L14 12 L10 12 Z" fill="#B86B22"/>
-          <path d="M12 19.5 L14 12 L10 12 Z" fill="#1F4D3F"/>
-          <circle cx="12" cy="12" r="1.4" fill="#FBF8F2" stroke="#1F4D3F" stroke-width="0.8"/>
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+          <path d="M9 24 V17 H23 V14" stroke="#1B1815" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9" cy="24" r="3.6" fill="#1F4D3F"/>
+          <circle cx="23" cy="9" r="5.2" fill="#1F4D3F"/>
+          <circle cx="23" cy="9" r="2.4" fill="#FBF8F2"/>
+          <rect x="22.1" y="7.1" width="1.8" height="3.8" rx="0.9" fill="#1B1815"/>
         </svg>
       </span>
       <span class="logo-word">GT<span class="logo-accent">MAP</span></span>
@@ -888,11 +889,12 @@ footer{border-top:1px solid var(--line);padding:54px 0 60px;background:var(--bg-
     <div>
       <div class="fbrand">
         <span class="logo-mark" aria-hidden="true">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="#1F4D3F" stroke-width="1.6"/>
-            <path d="M12 4.5 L14 12 L10 12 Z" fill="#B86B22"/>
-            <path d="M12 19.5 L14 12 L10 12 Z" fill="#1F4D3F"/>
-            <circle cx="12" cy="12" r="1.4" fill="#FBF8F2" stroke="#1F4D3F" stroke-width="0.8"/>
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+            <path d="M9 24 V17 H23 V14" stroke="#1B1815" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="24" r="3.6" fill="#1F4D3F"/>
+            <circle cx="23" cy="9" r="5.2" fill="#1F4D3F"/>
+            <circle cx="23" cy="9" r="2.4" fill="#FBF8F2"/>
+            <rect x="22.1" y="7.1" width="1.8" height="3.8" rx="0.9" fill="#1B1815"/>
           </svg>
         </span>
         GT<span class="logo-accent">MAP</span>
