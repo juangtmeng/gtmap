@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desbloqueá tu informe · GTM</title>
+  <title>Desbloquea tu informe · GTM</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,7 +43,7 @@
 
 <div class="hero">
   <h1>Tu informe completo está listo para generarse 🧭</h1>
-  <p>Ya tenemos todos tus datos. Desbloqueá la Auditoría completa + GTM Framework + Plan de Acción.</p>
+  <p>Ya tenemos todos tus datos. Desbloquea la Auditoría completa + GTM Framework + Plan de Acción.</p>
 </div>
 
 <div class="container">
@@ -76,9 +76,9 @@
     </div>
 
     <div class="calendly-cta">
-      <p>¿Tenés dudas antes de pagar?</p>
+      <p>¿Tienes dudas antes de pagar?</p>
       <a id="calendlyBtn" href="#" onclick="abrirCalendly(); return false;">
-        Hablá con nosotros: reservá una llamada sin cargo →
+        Habla con nosotros: reserva una llamada sin cargo →
       </a>
     </div>
   </div>
@@ -99,12 +99,12 @@
   }
   if (email) {
     const p = document.querySelector('.hero p');
-    p.textContent = 'Lo enviamos a ' + email + '. Desbloqueá la Auditoría completa + GTM Framework + Plan de Acción.';
+    p.textContent = 'Lo enviamos a ' + email + '. Desbloquea la Auditoría completa + GTM Framework + Plan de Acción.';
   }
 
   // Mostrar error si MP redirigió con fallo
   if (params.get('error') === '1') {
-    showErr('El pago no se completó. Podés intentarlo nuevamente.');
+    showErr('El pago no se completó. Puedes intentarlo nuevamente.');
   }
 
   function showErr(msg) { const el = document.getElementById('err'); el.textContent = msg; el.style.display = 'block'; }
@@ -117,7 +117,7 @@
 
   async function mpPagar() {
     document.getElementById('err').style.display = 'none';
-    if (!sid) { showErr('No encontramos tu sesión. Volvé a empezar el formulario.'); return; }
+    if (!sid) { showErr('No encontramos tu sesión. Vuelve a empezar el formulario.'); return; }
     const btn = document.getElementById('btnMp');
     btn.disabled = true;
     document.getElementById('spMp').style.display = 'inline-block';

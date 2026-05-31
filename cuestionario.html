@@ -106,7 +106,7 @@
 <body>
 
 <div class="hero">
-  <h1>Contanos más sobre tu empresa</h1>
+  <h1>Cuéntanos más sobre tu empresa</h1>
   <p>10 preguntas · 4-6 minutos · Cuando termines generamos tu auditoría + GTM Framework.</p>
 </div>
 
@@ -184,7 +184,7 @@
 
       <!-- CORE 4 -->
       <div class="question">
-        <span class="question-label">4. ¿Qué herramientas tenés activas hoy?</span>
+        <span class="question-label">4. ¿Qué herramientas tienes activas hoy?</span>
         <div class="options-grid" id="core4Group">
           <label class="option-card multi" onclick="toggleMulti('core_4', 'Google Analytics 4', this, 8)">
             <span class="option-check"></span><span class="option-label">Google Analytics 4</span>
@@ -215,7 +215,7 @@
 
       <!-- CORE 5 -->
       <div class="question">
-        <span class="question-label">5. ¿Qué sentís que te está faltando para crecer? <span style="font-weight:400;font-size:0.82rem;color:#64748b">(máx 2)</span></span>
+        <span class="question-label">5. ¿Qué sientes que te está faltando para crecer? <span style="font-weight:400;font-size:0.82rem;color:#64748b">(máx 2)</span></span>
         <div class="options-grid" id="core5Group">
           <label class="option-card multi" onclick="toggleMulti('core_5', 'Claridad sobre a quién le vendemos', this, 2)">
             <span class="option-check"></span><span class="option-label">Claridad sobre a quién le vendemos</span>
@@ -271,7 +271,7 @@
         </div>
 
         <div class="question">
-          <span class="question-label">7. ¿Cómo vendés tu producto hoy?</span>
+          <span class="question-label">7. ¿Cómo vendes tu producto hoy?</span>
           <div class="options-grid" id="saas2Group">
             <label class="option-card" onclick="selectSingle('saas_2', 'Freemium', this)"><span class="option-dot"></span><span class="option-label">Freemium (plan gratis + upgrade)</span></label>
             <label class="option-card" onclick="selectSingle('saas_2', 'Free trial', this)"><span class="option-dot"></span><span class="option-label">Free trial (prueba limitada, luego pago)</span></label>
@@ -487,7 +487,7 @@
         <div class="spinner" id="spinner"></div>
         <span id="btnText">Generar mi GTM Framework →</span>
       </button>
-      <p class="required-note" style="text-align:center;margin-top:10px">En 5-10 minutos recibís el PDF por email.</p>
+      <p class="required-note" style="text-align:center;margin-top:10px">En 5-10 minutos recibes el PDF por email.</p>
 
     </form>
   </div>
@@ -506,7 +506,7 @@
 
   // Personalizar bienvenida
   if (nombre) {
-    document.querySelector('.hero h1').textContent = `Hola ${nombre.split(' ')[0]}, contanos más sobre tu empresa`;
+    document.querySelector('.hero h1').textContent = `Hola ${nombre.split(' ')[0]}, cuéntanos más sobre tu empresa`;
   }
 
   // Mostrar sección correcta según vertical
@@ -567,12 +567,12 @@
     hideError();
 
     // Validar core
-    if (!answers.core_1) return showError('Por favor respondé la pregunta 1.');
+    if (!answers.core_1) return showError('Por favor responde la pregunta 1.');
     const core2 = document.getElementById('core_2').value.trim();
-    if (!core2) return showError('Por favor respondé la pregunta 2.');
-    if (!multiAnswers.core_3 || multiAnswers.core_3.length === 0) return showError('Por favor respondé la pregunta 3.');
-    if (!multiAnswers.core_4 || multiAnswers.core_4.length === 0) return showError('Por favor respondé la pregunta 4.');
-    if (!multiAnswers.core_5 || multiAnswers.core_5.length === 0) return showError('Por favor respondé la pregunta 5.');
+    if (!core2) return showError('Por favor responde la pregunta 2.');
+    if (!multiAnswers.core_3 || multiAnswers.core_3.length === 0) return showError('Por favor responde la pregunta 3.');
+    if (!multiAnswers.core_4 || multiAnswers.core_4.length === 0) return showError('Por favor responde la pregunta 4.');
+    if (!multiAnswers.core_5 || multiAnswers.core_5.length === 0) return showError('Por favor responde la pregunta 5.');
 
     // Construir respuestas
     const respuestas = {

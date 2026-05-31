@@ -77,16 +77,17 @@
 
   <!-- CTA -->
   <div class="cta-box">
-    <h3>Desbloqueá tu informe completo 🧭</h3>
+    <h3>Desbloquea tu informe completo 🧭</h3>
     <p id="ctaText">Auditoría + GTM Framework completo, sobre tus datos reales y listo para ejecutar. US$49.</p>
     <button class="btn" id="ctaBtn">Generar mi informe completo →</button>
-    <p class="cta-sub">Respondés un cuestionario breve y generamos todo. El Plan de Acción ejecutivo está disponible después como upgrade.</p>
+    <p class="cta-sub">Respondes un cuestionario breve y generamos todo. El Plan de Acción ejecutivo está disponible después como upgrade.</p>
   </div>
 
 </div>
 
 <script>
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTsAzNH8hG18m3sCDlu15-L4UTJ5Pg3akbv4vPo0bDixznsoWIBpGijq97PyP1SafYQw/exec';
+  // El extracto se pide al Worker de Cloudflare (proxy con CORS); evita el JSONP frágil.
+  const WORKER_URL = 'https://mp-checkout.juangtmeng.workers.dev';
 
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id') || '';
@@ -96,7 +97,7 @@
   const nombre = params.get('nombre') || '';
 
   if (nombre) document.getElementById('heroSub').textContent =
-    'Dale ' + nombre.split(' ')[0] + ', estamos leyendo tu presencia digital. Tu extracto aparece en segundos.';
+    'Hola ' + nombre.split(' ')[0] + ', estamos leyendo tu presencia digital. Tu extracto aparece en segundos.';
 
   // CTA → cuestionario (pasa todos los params, incluido session_id)
   document.getElementById('ctaBtn').onclick = () => location.href = 'cuestionario.html?' + params.toString();
@@ -141,21 +142,7 @@
   }
   renderToc();
 
-  // ===== Teaser (barato, vía action=teaser; usa url+vertical, sin sid) =====
-  function jsonp(u, timeoutMs) {
-    return new Promise((resolve, reject) => {
-      const cb = 'tcb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-      const s = document.createElement('script');
-      let done = false;
-      const timer = setTimeout(() => { if (!done){done=true; cleanup(); reject(new Error('timeout'));} }, timeoutMs || 60000);
-      function cleanup(){ try{delete window[cb];}catch(e){window[cb]=undefined;} if(s.parentNode)s.parentNode.removeChild(s); clearTimeout(timer); }
-      window[cb] = d => { if(done)return; done=true; cleanup(); resolve(d); };
-      s.onerror = () => { if(done)return; done=true; cleanup(); reject(new Error('script_error')); };
-      s.src = u + (u.indexOf('?')!==-1?'&':'?') + 'callback=' + cb;
-      document.body.appendChild(s);
-    });
-  }
-
+  // ===== Teaser (barato; usa url+vertical, sin sid) =====
   function mdToHtml(md) {
     const esc = x => x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     const lines = md.split('\n'); let html='', inList=false;
@@ -172,8 +159,9 @@
 
   async function cargarTeaser() {
     try {
-      const qs = new URLSearchParams({ action: 'teaser', url: url, vertical: vertical });
-      const data = await jsonp(APPS_SCRIPT_URL + '?' + qs.toString(), 60000);
+      const qs = new URLSearchParams({ url: url, vertical: vertical });
+      const res = await fetch(WORKER_URL + '/teaser?' + qs.toString());
+      const data = await res.json();
       if (!data || !data.teaser) throw new Error('sin teaser');
       document.getElementById('genState').style.display = 'none';
       const tb = document.getElementById('teaserBody');
@@ -182,13 +170,13 @@
       document.getElementById('heroTitle').textContent = '¡Tu extracto está listo!';
       document.getElementById('heroSub').textContent = 'Esto es solo una probada. El informe completo está abajo.';
     } catch (e) {
-      document.getElementById('genState').innerHTML = '<div class="msg" style="color:var(--ink-soft)">No pudimos leer tu sitio ahora. Igual podés generar tu informe completo abajo 👇</div>';
+      document.getElementById('genState').innerHTML = '<div class="msg" style="color:var(--ink-soft)">No pudimos leer tu sitio ahora. Igual puedes generar tu informe completo abajo 👇</div>';
       document.getElementById('heroTitle').textContent = 'Tu extracto';
     }
   }
 
   if (url) cargarTeaser();
-  else document.getElementById('genState').innerHTML = '<div class="msg" style="color:var(--ink-soft)">Generá tu informe completo abajo 👇</div>';
+  else document.getElementById('genState').innerHTML = '<div class="msg" style="color:var(--ink-soft)">Genera tu informe completo abajo 👇</div>';
 </script>
 
 </body>

@@ -134,7 +134,7 @@
       <div class="form-group">
         <label for="oferta">¿Qué ofrecés a tus clientes?</label>
         <select id="oferta" onchange="render()">
-          <option value="">Elegí una opción…</option>
+          <option value="">Elige una opción…</option>
           <option>Consultoría de marketing</option>
           <option>Consultoría de growth</option>
           <option>Branding / posicionamiento</option>
@@ -144,7 +144,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label>¿Qué tipo de clientes atendés? <span class="optional">(elegí los que apliquen)</span></label>
+        <label>¿Qué tipo de clientes atiendes? <span class="optional">(elige los que apliquen)</span></label>
         <div class="checks" id="clientesChecks">
           <div class="check" data-v="SaaS / Software" onclick="toggleCheck(this)"><span class="box"></span>SaaS / Software</div>
           <div class="check" data-v="Ecommerce / Marca de producto" onclick="toggleCheck(this)"><span class="box"></span>E-commerce</div>
@@ -153,7 +153,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="metodo">¿Cuál es tu metodología o ángulo propio? <span class="optional">(para que el entregable suene a vos)</span></label>
+        <label for="metodo">¿Cuál es tu metodología o ángulo propio? <span class="optional">(para que el entregable suene a ti)</span></label>
         <textarea id="metodo" placeholder="Ej: Trabajamos con un enfoque de demanda primero, validando ICP contra datos reales antes de invertir en pauta..." oninput="render()"></textarea>
       </div>
       <div class="form-group">
@@ -187,7 +187,7 @@
       <button class="btn btn-primary" id="realBtn" onclick="generarPreviewReal()">
         <span id="realBtnText">Generar 1 preview real gratis →</span>
       </button>
-      <button class="btn btn-ghost" onclick="alert('Próximamente: configurá tu servicio completo, probá con más clientes y activá tu URL propia. Por ahora dejanos tu contacto y te avisamos.')">Quiero configurar mi servicio completo</button>
+      <button class="btn btn-ghost" onclick="alert('Próximamente: configura tu servicio completo, prueba con más clientes y activa tu URL propia. Por ahora déjanos tu contacto y te avisamos.')">Quiero configurar mi servicio completo</button>
       <div class="err" id="err"></div>
 
     </form>
@@ -209,7 +209,7 @@
         Documento preparado por <b id="repFooter">Tu Consultora</b> · <span id="repSitio">tuconsultora.com</span>
       </div>
     </div>
-    <p class="preview-note" id="previewNote">Demo de ejemplo. Completá tu marca a la izquierda y mirá cómo cambia. Después generá 1 preview real sobre un cliente tuyo.</p>
+    <p class="preview-note" id="previewNote">Demo de ejemplo. Completa tu marca a la izquierda y mira cómo cambia. Después genera 1 preview real sobre un cliente tuyo.</p>
   </div>
 
 </div>
@@ -303,7 +303,7 @@
 
   async function generarPreviewReal() {
     document.getElementById('err').style.display = 'none';
-    if (previewRealUsado) return showErr('Ya usaste tu preview real gratis. Para generar más, configurá tu servicio.');
+    if (previewRealUsado) return showErr('Ya usaste tu preview real gratis. Para generar más, configura tu servicio.');
 
     const clienteUrl = document.getElementById('clienteUrl').value.trim();
     const vertical = document.getElementById('clienteVertical').value;
@@ -330,7 +330,7 @@
     } catch (e) {
       btn.disabled = false;
       txt.textContent = 'Generar 1 preview real gratis →';
-      showErr('No pudimos generar el preview ahora. Probá con otra URL o reintentá en un momento.');
+      showErr('No pudimos generar el preview ahora. Prueba con otra URL o reinténtalo en un momento.');
       document.getElementById('repBody').innerHTML = DEMO_BODY;
     }
   }
